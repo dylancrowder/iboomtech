@@ -1,0 +1,164 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+  justify-content: center;
+}
+.gen {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  height: 50vh;
+  width: 90%;
+}
+
+.cnt_title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutText {
+  width: 100%;
+  font-size: 1.8rem;
+}
+
+.flex {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid_container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.card_container {
+  width: 630px;
+}
+
+.container_info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  border-top: 1px solid black;
+}
+
+.c {
+  display: flex;
+  align-items: center;
+}
+
+.img_text_cont {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+.ll {
+  background-color: var(--background);
+  border-radius: 12px;
+}
+.icon_img {
+  width: 70px;
+}
+
+.subtitle_about {
+  font-size: 1.6rem;
+  margin-left: 18px;
+}
+
+.motion_ctn {
+  padding-block: 10px;
+}
+
+.margin_top {
+  width: 100%;
+}
+
+.aboutText strong {
+  background: linear-gradient(
+    to right,
+    #3e3ff5,
+    #6a66ff
+  ); /* Gradiente de color basado en #3e3ff5 */
+  -webkit-background-clip: text; /* Solo aplica el gradiente al texto */
+  color: transparent; /* Hace el color del texto transparente para ver el gradiente */
+  font-weight: bold; /* Asegura que el texto esté en negrita */
+}
+
+.btn_mas {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chevron_icon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.6s ease;
+  transform: rotate(0deg);
+}
+
+.btn_mas[aria-expanded="true"] .chevron_icon {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+  .aboutText {
+    font-size: 1.2rem; /* Reduce el tamaño del texto en pantallas pequeñas */
+  }
+
+  .grid_container {
+    flex-direction: column; /* Apilar las tarjetas verticalmente */
+  }
+
+  .card_container {
+    width: 100%; /* Las tarjetas ocupan todo el ancho en pantallas pequeñas */
+    max-width: 400px; /* Limita el ancho de las tarjetas */
+  }
+
+  .icon_img {
+    width: 60px; /* Reduzco el tamaño del ícono en pantallas pequeñas */
+  }
+
+  .subtitle_about {
+    font-size: 1rem; /* Ajusta el tamaño del subtítulo */
+  }
+
+  .chevron_icon {
+    width: 10px; /* Hace el icono más pequeño */
+    height: 10px;
+  }
+  .about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    justify-content: center;
+    margin-block: var(--altura-nav);
+  }
+
+  .gen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    height: auto;
+    width: 90%;
+    gap: var(--altura-nav);
+
+  }
+}

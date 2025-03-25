@@ -1,0 +1,88 @@
+.main_carrousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebe8e8;
+  height: 60vh;
+  width: 90%;
+  border-radius: var(--border-radius);
+}
+.centro_carrousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.contenedor_carrousel {
+  width: 100%;
+  position: relative; /* Para que los botones se posicionen correctamente */
+}
+
+.swipper {
+  height: 100%;
+  width: 100%;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prevButton {
+  left: 0px;
+}
+
+.nextButton {
+  right: 0px;
+}
+
+.img {
+  width: 100%; /* Asegura que la imagen ocupe el 100% del contenedor */
+  height: auto; /* Mantiene la proporción original de la imagen */
+  max-height: 230px; /* Limita la altura máxima */
+  object-fit: contain; /* Asegura que la imagen se muestre completa dentro del contenedor sin recortes */
+  transition: transform 0.3s ease;
+}
+
+.card_c {
+  margin-block: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  padding: 0px;
+}
+
+.title_card {
+  font-size: 1rem;
+  font-weight: bold;
+}
+.c_c {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  margin-left: 40px;
+  margin-top: 12px;
+}
+
+.subtitle_card {
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .c_c {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    margin-left: 100px;
+    margin-top: 12px;
+  }
+
+  .main_carrousel {
+    height: 50vh;
+  }
+}

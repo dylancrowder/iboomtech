@@ -156,13 +156,14 @@ function FilterContent({
                     value={category.id}
                     id={`category-${category.id}`}
                     onChange={() => handleCategoryChange(category.id)}
+                    className="cursor-pointer"
                   />
                   <Label
                     htmlFor={`category-${category.id}`}
                     className="flex items-center"
                   >
                     <category.icon className="h-4 gap-2" />
-                    <span className="">{category.name}</span>
+                    <span className="cursor-pointer">{category.name}</span>
                   </Label>
                 </div>
               </Link>
@@ -176,16 +177,19 @@ function FilterContent({
       {/* Models - Only show if a category is selected */}
       {selectedCategory && (
         <div>
-          <h3 className="font-medium mb-2">Modelos</h3>
+          <h3 className="font-medium mb-2 cursor-pointer">Modelos</h3>
           <div className="space-y-2">
             {/* Checkbox para la categoría "todos" */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 ">
               <Checkbox
                 id={`todos`}
                 checked={selectedModels.includes("")}
                 onCheckedChange={() => handleModelChange("")}
+                className="cursor-pointer"
               />
-              <Label htmlFor={`todos`}>Todos</Label>
+              <Label className="cursor-pointer" htmlFor={`todos`}>
+                Todos
+              </Label>
             </div>
 
             {/* Mapeo de los modelos para la categoría seleccionada */}
@@ -195,8 +199,11 @@ function FilterContent({
                   id={`model-${model}`}
                   checked={selectedModels.includes(model)}
                   onCheckedChange={() => handleModelChange(model)}
+                  className="cursor-pointer"
                 />
-                <Label htmlFor={`model-${model}`}>{model}</Label>
+                <Label className="cursor-pointer" htmlFor={`model-${model}`}>
+                  {model}
+                </Label>
               </div>
             ))}
           </div>
@@ -206,9 +213,9 @@ function FilterContent({
 
       {/* Colors */}
       {selectedCategory && selectedCategory !== "accessories" && (
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full cursor-pointer">
           <AccordionItem value="colors">
-            <AccordionTrigger className="py-2">Colores</AccordionTrigger>
+            <AccordionTrigger className="py-2 cursor-pointer">Colores</AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2">
                 {/* Checkbox para la categoría "todos los colores" */}
@@ -217,8 +224,11 @@ function FilterContent({
                     id="todos-colores"
                     checked={selectedColors.includes("")}
                     onCheckedChange={() => handleColorChange("")}
+                    className="cursor-pointer"
                   />
-                  <Label htmlFor="todos-colores">Todos los colores</Label>
+                  <Label className="cursor-pointer" htmlFor="todos-colores">
+                    Todos los colores
+                  </Label>
                 </div>
 
                 {/* Mapeo de los colores filtrados */}
@@ -228,10 +238,11 @@ function FilterContent({
                       id={`color-${color.name}`}
                       checked={selectedColors.includes(color.name)}
                       onCheckedChange={() => handleColorChange(color.name)}
+                      className="cursor-pointer"
                     />
                     <Label
                       htmlFor={`color-${color.name}`}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
                       <div
                         className="h-3 w-3 rounded-full"
@@ -257,9 +268,9 @@ function FilterContent({
 
       {/* Memory */}
       {selectedCategory === "iphone" || selectedCategory === "ipad" ? (
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full ">
           <AccordionItem value="memory">
-            <AccordionTrigger className="py-2">Memoria</AccordionTrigger>
+            <AccordionTrigger className="py-2 cursor-pointer">Memoria</AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
@@ -267,8 +278,11 @@ function FilterContent({
                     id="todos-memorias"
                     checked={selectedMemory.includes("")}
                     onCheckedChange={() => handleMemoryChange("")}
+                    className="cursor-pointer"
                   />
-                  <Label htmlFor="todos-memorias">Todas las memorias</Label>
+                  <Label className="cursor-pointer" htmlFor="todos-memorias">
+                    Todas las memorias
+                  </Label>
                 </div>
                 {memories.map((memory) => (
                   <div key={memory} className="flex items-center space-x-2">
@@ -276,8 +290,14 @@ function FilterContent({
                       id={`memory-${memory}`}
                       checked={selectedMemory.includes(memory)}
                       onCheckedChange={() => handleMemoryChange(memory)}
+                      className="cursor-pointer"
                     />
-                    <Label htmlFor={`memory-${memory}`}>{memory}</Label>
+                    <Label
+                      className="cursor-pointer"
+                      htmlFor={`memory-${memory}`}
+                    >
+                      {memory}
+                    </Label>
                   </div>
                 ))}
               </div>
@@ -290,25 +310,25 @@ function FilterContent({
 
       {/* Price Sorting */}
       <div>
-        <h3 className="font-medium mb-2">Ordenar por precio</h3>
+        <h3 className="font-medium mb-2 ">Ordenar por precio</h3>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger asChild className="cursor-pointer">
             <Button variant="outline" className="w-full justify-between">
               {sortOrder === "asc"
                 ? "Precio: Menor a Mayor"
                 : "Precio: Mayor a Menor"}
-              <ChevronDown className="ml-2 h-4 w-4" />
+              <ChevronDown className="ml-2 h-4 w-4 " />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[200px]">
             <DropdownMenuItem onClick={() => sort("des")}>
-              <ArrowUpAZ className="mr-2 h-4 w-4" />
-              <span>Precio: Menor a Mayor</span>
+              <ArrowUpAZ className="mr-2 h-4 w-4 " />
+              <span className="cursor-pointer">Precio: Menor a Mayor</span>
               {sortOrder === "asc" && <Check className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => sort("asc")}>
               <ArrowDownAZ className="mr-2 h-4 w-4" />
-              <span>Precio: Mayor a Menor</span>
+              <span className="cursor-pointer">Precio: Mayor a Menor</span>
               {sortOrder === "des" && <Check className="ml-auto h-4 w-4" />}
             </DropdownMenuItem>
           </DropdownMenuContent>

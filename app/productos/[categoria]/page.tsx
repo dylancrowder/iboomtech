@@ -115,7 +115,7 @@ export default function Home() {
                     passHref
                     className="p-0 pt-0 mt-auto"
                   >
-                    <Button className="w-full text-sm h-10">
+                    <Button className="w-full text-sm h-10 cursor-pointer">
                       Ver detalles
                     </Button>
                   </Link>

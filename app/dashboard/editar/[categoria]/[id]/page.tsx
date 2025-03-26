@@ -59,6 +59,7 @@ export default function ProductoDetalle() {
 
   return (
     <Card className="max-w-lg mx-auto mt-8 p-6 shadow-lg">
+      sds
       <CardContent>
         <h2 className="text-xl font-semibold mb-4">Editar {producto.model}</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

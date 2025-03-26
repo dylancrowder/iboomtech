@@ -14,7 +14,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="dark:bg-gray-900 min-h-screen md:min-h-0 flex flex-col justify-start">
+    <footer className="dark:bg-gray-900 min-h-screen md:min-h-0 flex flex-col justify-end ">
       <hr className="border-black" />
 
       <div className="mx-auto w-full" style={{ width: "90%" }}>

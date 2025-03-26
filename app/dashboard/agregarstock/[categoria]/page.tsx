@@ -74,9 +74,19 @@ export default function ProductForm() {
   }
 
   return (
-    <div className=" w-[50%]">
+    <div className="flex justify-center flex-col lg:w-[100%] xl:w-[100%]  items-center mt-17 lg:mt-0 ">
+      <div className=" py-6 bg-gray-100 lg:border-b lg:border-gray-500 w-full ">
+        <div className="flex  justify-center ">
+          <span className="font text-[1.5rem] p-2 text-bold font-medium  ">
+            Añadir iPhones
+          </span>
+        </div>
+      </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6  lg:py-8 w-[100%] lg:w-[50%]  m-6 "
+        >
           <FormField
             control={form.control}
             name="model"
@@ -87,7 +97,7 @@ export default function ProductForm() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="border-gray-700 w-[100%]">
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccione un modelo" />
                     </SelectTrigger>
@@ -116,6 +126,7 @@ export default function ProductForm() {
                     type="number"
                     {...field}
                     onChange={(e) => field.onChange(e.target.value)}
+                    className="border-gray-700 w-[100%]"
                   />
                 </FormControl>
                 <FormMessage />
@@ -133,7 +144,7 @@ export default function ProductForm() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="border-gray-700 w-[100%]">
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccione una Condición" />
                     </SelectTrigger>
@@ -162,6 +173,7 @@ export default function ProductForm() {
                     type="number"
                     {...field}
                     onChange={(e) => field.onChange(e.target.value)}
+                    className="border-gray-700 w-[100%]"
                   />
                 </FormControl>
                 <FormMessage />
@@ -179,7 +191,7 @@ export default function ProductForm() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="border-gray-700 w-[100%]">
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccione un color" />
                     </SelectTrigger>
@@ -208,6 +220,7 @@ export default function ProductForm() {
                     type="number"
                     {...field}
                     onChange={(e) => field.onChange(e.target.value)}
+                    className="border-gray-700"
                   />
                 </FormControl>
                 <FormMessage />
@@ -225,7 +238,7 @@ export default function ProductForm() {
                   onValueChange={(value) => field.onChange(value)}
                   defaultValue={field.value?.toString()}
                 >
-                  <FormControl>
+                  <FormControl className="border-gray-700 ">
                     <SelectTrigger>
                       <SelectValue placeholder="Seleccione un tamaño de memoria" />
                     </SelectTrigger>
@@ -253,7 +266,7 @@ export default function ProductForm() {
                   <Textarea
                     placeholder="Describe el producto"
                     {...field}
-                    className="resize-y min-h-[100px]"
+                    className="resize-y min-h-[100px] border-gray-700 w-[100%]"
                   />
                 </FormControl>
                 <FormDescription>Máximo 500 caracteres</FormDescription>
@@ -272,7 +285,7 @@ export default function ProductForm() {
                   <Textarea
                     placeholder="Detalles adicionales del producto"
                     {...field}
-                    className="resize-y min-h-[100px]"
+                    className="resize-y min-h-[100px] border-gray-700 w-[100%]"
                   />
                 </FormControl>
                 <FormDescription>Máximo 1000 caracteres</FormDescription>
@@ -285,7 +298,7 @@ export default function ProductForm() {
             control={form.control}
             name="enabled"
             render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 border-gray-700 w-[100%]">
                 <FormControl>
                   <Checkbox
                     checked={field.value}

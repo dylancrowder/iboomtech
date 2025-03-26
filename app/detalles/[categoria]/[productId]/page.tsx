@@ -19,7 +19,7 @@ import { useParams } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCarritoStore } from "@/zustand/carritoStore";
-
+import { toast } from "sonner";
 // Sample product data - in a real app, you would fetch this from your API
 interface Product {
   _id: string;
@@ -212,7 +212,7 @@ export default function ProductDetails() {
               <h3 className="font-medium mb-2">Color</h3>
               <div className="flex items-center space-x-3">
                 <div
-                  className={`w-6 h-6 rounded-full ${getColorBackground(
+                  className={`w-6 h-6 rounded-full  ${getColorBackground(
                     product.color
                   )}`}
                 ></div>
@@ -251,10 +251,18 @@ export default function ProductDetails() {
 
           <div className="pt-4">
             <Button
-              className="w-full"
+              className="w-full cursor-pointer"
               size="lg"
               onClick={() => {
-                if (product) agregarAlCarrito(product);
+                if (product) {
+                  agregarAlCarrito(product);
+                  toast.success(`${product.model} añadido al carrito`, {
+                    action: {
+                      label: "Ver carrito",
+                      onClick: () => console.log("Ir al carrito"),
+                    },
+                  });
+                }
               }}
             >
               <ShoppingCart className="mr-2 h-5 w-5" />
@@ -265,9 +273,13 @@ export default function ProductDetails() {
           <Separator />
 
           <Tabs defaultValue="specs">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="specs">Especificaciones</TabsTrigger>
-              <TabsTrigger value="condition">Estado</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 ">
+              <TabsTrigger className="cursor-pointer" value="specs ">
+                Especificaciones
+              </TabsTrigger>
+              <TabsTrigger className="cursor-pointer" value="condition">
+                Estado
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="specs" className="pt-4">

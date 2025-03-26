@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import { ShoppingCart, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,11 +15,12 @@ import { useCarritoStore } from "@/zustand/carritoStore";
 
 export default function CartMenu() {
   const { carrito, eliminarDelCarrito, vaciarCarrito } = useCarritoStore();
+  const [open, setOpen] = useState(false);
 
   const cartTotal = carrito.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative cursor-pointer">
           <ShoppingCart className="h-5 w-5" />
@@ -49,6 +51,7 @@ export default function CartMenu() {
                     variant="ghost"
                     size="icon"
                     onClick={() => eliminarDelCarrito(item._id)}
+                    className="cursor-pointer"
                   >
                     <Trash2 className="h-4 w-4 text-red-500" />
                   </Button>
@@ -61,10 +64,14 @@ export default function CartMenu() {
                 <span>Total:</span>
                 <span>${cartTotal.toFixed(2)}</span>
               </div>
-              <Button asChild className="mt-4 w-full">
+              <Button
+                asChild
+                className="mt-4 w-full cursor-pointer"
+                onClick={() => setOpen(false)} // Cierra el menú al hacer clic
+              >
                 <Link href="/checkout">Proceder al pago</Link>
               </Button>
-              <Button variant="destructive" className="mt-2 w-full" onClick={vaciarCarrito}>
+              <Button variant="destructive" className="mt-2 w-full cursor-pointer" onClick={vaciarCarrito}>
                 Vaciar Carrito
               </Button>
             </div>

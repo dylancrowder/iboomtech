@@ -1,15 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
-
-import { Breadcrumb, BreadcrumbItem } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useParams } from "next/navigation";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Filter } from "lucide-react";
 
 type FilterKey = "model" | "color" | "memory" | "condition";
 type SortField = "price" | "batteryStatus" | "";
@@ -34,7 +40,7 @@ export default function ProductosPage() {
     memory: "all",
     condition: "all",
   });
-    const { categoria } = useParams();
+  const { categoria } = useParams();
 
   const [sortBy, setSortBy] = useState<SortField>("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -90,59 +96,84 @@ export default function ProductosPage() {
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <Breadcrumb>
-        <BreadcrumbItem><Link href="/dashboard">Dashboard</Link></BreadcrumbItem>
-        <BreadcrumbItem><Link href="/dashboard/inventario">Inventario</Link></BreadcrumbItem>
-        <BreadcrumbItem>iPhone</BreadcrumbItem>
-      </Breadcrumb>
-
-      <div className="flex flex-wrap gap-4 mb-4 items-center justify-between">
-        {Object.keys(availableFilters).map((filter) => (
-          <Select key={filter} onValueChange={(value) => handleFilterSelect(filter as FilterKey, value)}>
-            <SelectTrigger className="w-32">
-              <SelectValue placeholder={filter} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              {availableFilters[filter as FilterKey].map((value) => (
-                <SelectItem key={value} value={value}>{value}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ))}
-
-        <Select onValueChange={(value) => {
-          setSortBy("price");
-          setSortOrder(value as "asc" | "desc");
-        }}>
-          <SelectTrigger className="w-32">
-            <SelectValue placeholder="Precio" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="asc">Ascendente</SelectItem>
-            <SelectItem value="desc">Descendente</SelectItem>
-          </SelectContent>
-        </Select>
+    <div className="flex flex flex-col  mt-[80px] lg:mt-[0px]">
+      <div className=" py-6 bg-gray-100 lg:border-b lg:border-gray-500  ">
+        <div className="flex  justify-center ">
+          <span className="font text-[1.5rem] p-2 text-bold font-medium  ">
+            Editar iPhones
+          </span>
+        </div>
       </div>
+      <div className="min-h-screen w-full  lg:p-8 ">
+        <h2 className="mb-1  text-[1rem] flex items-center gap-2 pt-6 lg:pt-0">
+          <Filter className="w-4 h-4" />
+          Filtros
+        </h2>
+        {/* acas */}
+        <div className=" border shadow-md mb-8 p-6">
+          <div className="flex flex-col sm:flex-row w-full gap-6  ">
+            {Object.keys(availableFilters).map((filter) => (
+              <div key={filter} className="w-full">
+                <p className="text-sm font-medium capitalize mb-1">{filter}</p>
+                <Select
+                  onValueChange={(value) =>
+                    handleFilterSelect(filter as FilterKey, value)
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={`Seleccionar ${filter}`} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos</SelectItem>
+                    {availableFilters[filter as FilterKey].map((value) => (
+                      <SelectItem key={value} value={value}>
+                        {value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {iphones.map((iphone) => (
-          <Card key={iphone._id} className="shadow-md">
-     {/*        <Image src={img} alt={iphone.model} width={200} height={200} /> */}
-            <CardContent>
-              <p className="text-lg font-semibold">{iphone.model}</p>
-              <p className="text-gray-600">Color: {iphone.color}</p>
-              <p className="text-gray-600">Memoria: {iphone.memory}</p>
-              <p className="text-gray-600">Condición: {iphone.condition}</p>
-              <p className="text-lg font-semibold">${iphone.price}</p>
-              <p className="text-gray-600">Batería: {iphone.batteryStatus}%</p>
-              <Link href={`/dashboard/editar/${categoria}/${iphone._id}`}>
-                <Button className="w-full mt-2">Editar</Button>
-              </Link>
-            </CardContent>
-          </Card>
-        ))}
+            <div className="w-full">
+              <p className="text-sm font-medium mb-1">Ordenar por precio</p>
+              <Select
+                onValueChange={(value) => {
+                  setSortBy("price");
+                  setSortOrder(value as "asc" | "desc");
+                }}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Seleccionar" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="asc">Ascendente</SelectItem>
+                  <SelectItem value="desc">Descendente</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {iphones.map((iphone) => (
+            <Card key={iphone._id} className="shadow-md">
+              <CardContent>
+                <p className="text-lg font-semibold">{iphone.model}</p>
+                <p className="text-gray-600">Color: {iphone.color}</p>
+                <p className="text-gray-600">Memoria: {iphone.memory}</p>
+                <p className="text-gray-600">Condición: {iphone.condition}</p>
+                <p className="text-lg font-semibold">${iphone.price}</p>
+                <p className="text-gray-600">
+                  Batería: {iphone.batteryStatus}%
+                </p>
+                <Link href={`/dashboard/editar/${categoria}/${iphone._id}`}>
+                  <Button className="w-full mt-2">Editar</Button>
+                </Link>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );

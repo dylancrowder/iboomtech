@@ -1,9 +1,9 @@
 "use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
+//Requeridos
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+//Componentes Ui
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+//Zod
 import {
   conditions,
   memories,
@@ -152,7 +153,7 @@ export default function ProductForm() {
                   <SelectContent>
                     {conditions.map((condition) => (
                       <SelectItem key={condition} value={condition}>
-                        {condition === "new" ? "Nuevo" : "Usado"}
+                        {condition === "nuevo" ? "Nuevo" : "Usado"}
                       </SelectItem>
                     ))}
                   </SelectContent>

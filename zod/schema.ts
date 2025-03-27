@@ -1,13 +1,7 @@
-import { z } from "zod"
+import { z } from "zod";
 
 // Modelos de iPhone válidos
 export const validModels = [
-  "iPhone 5",
-  "iPhone 5s",
-  "iPhone 6",
-  "iPhone 6s",
-  "iPhone 7",
-  "iPhone 8",
   "iPhone X",
   "iPhone XR",
   "iPhone XS",
@@ -26,13 +20,16 @@ export const validModels = [
   "iPhone 15",
   "iPhone 15 Pro",
   "iPhone 15 Pro Max",
-] as const
+] as const;
 
 // Colores válidos
 export const validColors = [
+  "Coral",
+  "Negro",
+  "Blanco",
   "Gris espacial",
   "Plata",
-  "Dorado",
+  "Oro",
   "Medianoche",
   "Luz estelar",
   "Azul",
@@ -40,14 +37,15 @@ export const validColors = [
   "Verde",
   "Rojo",
   "Amarillo",
-  "Púrpura",
-  "Verde Alpino",
+  "Morado",
+  "Verde Noche",
   "Azul Pacífico",
-] as const
+  "Grafito",
+] as const;
 
-export const memories = [16, 32, 64, 128, 256, 512, 1024] as const
+export const memories = [16, 32, 64, 128, 256, 512, 1024] as const;
 // Condiciones válidas
-export const conditions = ["new", "used"] as const
+export const conditions = ["nuevo", "usado"] as const;
 
 // Esquema de validación
 export const productSchema = z.object({
@@ -81,16 +79,21 @@ export const productSchema = z.object({
     .min(8, { message: "La memoria debe ser al menos 8GB" })
     .max(1024, { message: "La memoria no puede superar los 1024GB" }),
 
-  description: z.string().min(5, { message: "La descripción debe tener al menos 5 caracteres" }).max(500, {
-    message: "La descripción no puede superar los 500 caracteres",
-  }),
+  description: z
+    .string()
+    .min(5, { message: "La descripción debe tener al menos 5 caracteres" })
+    .max(500, {
+      message: "La descripción no puede superar los 500 caracteres",
+    }),
 
-  details: z.string().min(5, { message: "Los detalles deben tener al menos 5 caracteres" }).max(1000, {
-    message: "Los detalles no pueden superar los 1000 caracteres",
-  }),
+  details: z
+    .string()
+    .min(5, { message: "Los detalles deben tener al menos 5 caracteres" })
+    .max(1000, {
+      message: "Los detalles no pueden superar los 1000 caracteres",
+    }),
 
   enabled: z.boolean(),
-})
+});
 
-export type ProductFormValues = z.infer<typeof productSchema>
-
+export type ProductFormValues = z.infer<typeof productSchema>;

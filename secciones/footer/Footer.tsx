@@ -15,7 +15,7 @@ export function Footer() {
 
   return (
     <footer className="dark:bg-gray-900 min-h-screen md:min-h-0 flex flex-col justify-end ">
-      <hr className="border-black" />
+      <hr className="border" />
 
       <div className="mx-auto w-full" style={{ width: "90%" }}>
         <div className="md:flex md:justify-between lg:py-[64px] my-[64px]">
@@ -32,20 +32,20 @@ export function Footer() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-6">
             {/* Media Section */}
             <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+              <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Redes Sociales
               </h2>
               <div className="flex flex-row justify-start space-x-4">
                 <Link
                   href="https://wa.me/yourphonenumber"
-                  className="hover:underline text-gray-500 dark:text-gray-400"
+                  className="hover:underline  dark:text-gray-400"
                   aria-label="WhatsApp"
                 >
                   <MessageCircle className="w-6 h-6" />
                 </Link>
                 <Link
                   href="https://instagram.com/yourusername"
-                  className="hover:underline text-gray-500 dark:text-gray-400"
+                  className="hover:underline  dark:text-gray-400"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-6 h-6" />
@@ -55,10 +55,10 @@ export function Footer() {
 
             {/* Categories Section */}
             <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+              <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Categorías
               </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className=" dark:text-gray-400 font-medium">
                 <li className="mb-1">
                   <Link href="#" className="hover:underline">
                     iPhones
@@ -89,28 +89,25 @@ export function Footer() {
 
             {/* Contact Section */}
             <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+              <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Contacto
               </h2>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className=" dark:text-gray-400 font-medium">
                 <li className="mb-1">
                   <Link
                     href="mailto:contacto@comidaonline.com"
-                    className="text-gray-500 dark:text-gray-400"
+                    className="dark:text-gray-400"
                   >
                     Email: contacto@comidaonline.com
                   </Link>
                 </li>
                 <li className="mb-1">
-                  <Link
-                    href="tel:+1234567890"
-                    className="text-gray-500 dark:text-gray-400"
-                  >
+                  <Link href="tel:+1234567890" className=" dark:text-gray-400">
                     Teléfono: +123 456 7890
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-gray-500 dark:text-gray-400">
+                  <Link href="#" className=" dark:text-gray-400">
                     Ubicación: Calle Falsa 123, Ciudad
                   </Link>
                 </li>
@@ -120,7 +117,7 @@ export function Footer() {
         </div>
 
         {/* Divider Line */}
-        <hr className="border-black" />
+        <hr className="border" />
 
         {/* Footer Bottom Section */}
         <div className="sm:flex sm:items-center sm:justify-between my-[26px]">

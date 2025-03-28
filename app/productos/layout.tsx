@@ -4,7 +4,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex justify-center items-center">
       <span></span>
-      <div className="flex justify-start items-start w-[90%] py-4 ">
+      <div className="flex justify-start items-start w-[90%] py-6 ">
         <div className=" md:w-[30%]  ">
           <ProductFilterSidebar />
         </div>

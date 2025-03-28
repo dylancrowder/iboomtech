@@ -7,7 +7,7 @@ import styles from "./categorias.module.css";
 import img_iphone from "../../../assets/imagenes/inicio/iphone-blanca.jpg";
 import img_android from "../../../assets/imagenes/inicio/android-blanca.jpg";
 import img_airpod from "../../../assets/imagenes/inicio/airpods_blanco.jpg";
-import img_mac from "../../../assets/imagenes/inicio/mac.png"
+import img_mac from "../../../assets/imagenes/inicio/mcoro.jpg";
 
 const Categorias = () => {
   const { ref, inView } = useInView({

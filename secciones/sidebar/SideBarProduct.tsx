@@ -70,20 +70,25 @@ function FilterContent({
   const setCategory = useFilterStore((state: any) => state.setCategory);
   const { models, colors, memories } = useProductStores();
   const colores = [
-    { name: "Gris espacial", value: "#2C2C2E" },
-    { name: "Plata", value: "#F2F2F7" },
-    { name: "Dorado", value: "#D1B27A" },
-    { name: "Rojo", value: "#FF3B30" },
-    { name: "Azul", value: "#0061F2" },
-    { name: "Verde", value: "#32D74B" },
-    { name: "Púrpura", value: "#AF52DE" },
-    { name: "Rosa", value: "#FF2D55" },
-    { name: "Medianoche", value: "#1C1C1E" },
-    { name: "Luz estelar", value: "#F8F1E9" },
-    { name: "Titanio natural", value: "#E3DAC9" },
-    { name: "Titanio azul", value: "#6F7DC1" },
-    { name: "Titanio blanco", value: "#F2F2F7" },
-    { name: "Titanio negro", value: "#3E3E42" },
+    { name: "Coral", value: "#FF7F50" }, // Coral
+    { name: "Negro", value: "#000000" }, // Negro
+    { name: "Blanco", value: "#FFFFFF" }, // Blanco
+    { name: "Gris espacial", value: "#2C2C2E" }, // Gris espacial
+    { name: "Plata", value: "#C0C0C0" }, // Plata
+    { name: "Oro", value: "#FFD700" }, // Oro
+    { name: "Medianoche", value: "#1C1C1E" }, // Medianoche
+    { name: "Luz estelar", value: "#F8F1E9" }, // Luz estelar
+    { name: "Azul", value: "#0061F2" }, // Azul
+    { name: "Rosa", value: "#FF2D55" }, // Rosa
+    { name: "Verde", value: "#32D74B" }, // Verde
+    { name: "Rojo", value: "#FF3B30" }, // Rojo
+    { name: "Amarillo", value: "#FFFF00" }, // Amarillo
+    { name: "Morado", value: "#800080" }, // Morado
+    { name: "Verde Noche", value: "#004B23" }, // Verde Noche
+    { name: "Azul Pacífico", value: "#1D2D87" }, // Azul Pacífico
+    { name: "Titanio", value: "#E3DAC9" }, // Titanio
+    { name: "Titanio Desierto", value: "#D8C0A2" }, // Titanio Desierto
+    { name: "Grafito", value: "#474747" }, // Grafito
   ];
 
   const coloresFiltrados = colores.filter((color) =>
@@ -215,7 +220,9 @@ function FilterContent({
       {selectedCategory && selectedCategory !== "accessories" && (
         <Accordion type="single" collapsible className="w-full cursor-pointer">
           <AccordionItem value="colors">
-            <AccordionTrigger className="py-2 cursor-pointer">Colores</AccordionTrigger>
+            <AccordionTrigger className="py-2 cursor-pointer">
+              Colores
+            </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2">
                 {/* Checkbox para la categoría "todos los colores" */}
@@ -270,7 +277,9 @@ function FilterContent({
       {selectedCategory === "iphone" || selectedCategory === "ipad" ? (
         <Accordion type="single" collapsible className="w-full ">
           <AccordionItem value="memory">
-            <AccordionTrigger className="py-2 cursor-pointer">Memoria</AccordionTrigger>
+            <AccordionTrigger className="py-2 cursor-pointer">
+              Memoria
+            </AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
@@ -355,7 +364,7 @@ export default function ProductFilterSidebar() {
   return (
     <>
       {/* Mobile Filter Button */}
-      <div className="lg:hidden fixed bottom-4 right-4 z-50">
+      <div className="lg:hidden fixed bottom-4 right-4 z-50 ">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button className="rounded-full shadow-lg">
@@ -383,7 +392,7 @@ export default function ProductFilterSidebar() {
       </div>
 
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block h-full overflow-y-auto pr-4">
+      <div className="hidden lg:block h-full overflow-y-auto pr-6 ">
         <FilterContent
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}

@@ -9,17 +9,24 @@ export const validModels = [
   "iPhone 11 Pro",
   "iPhone 11 Pro Max",
   "iPhone 12",
+  "iPhone 12 Mini",
   "iPhone 12 Pro",
   "iPhone 12 Pro Max",
   "iPhone 13",
+  "iPhone 13 Mini",
   "iPhone 13 Pro",
   "iPhone 13 Pro Max",
   "iPhone 14",
+  "iPhone 14 Plus",
   "iPhone 14 Pro",
   "iPhone 14 Pro Max",
   "iPhone 15",
+  "iPhone 15 Plus",
   "iPhone 15 Pro",
   "iPhone 15 Pro Max",
+  "iPhone 16e",
+  "iPhone 16",
+  "iPhone 16 Pro",
 ] as const;
 
 // Colores válidos
@@ -41,6 +48,8 @@ export const validColors = [
   "Verde Noche",
   "Azul Pacífico",
   "Grafito",
+  "Titanio Desierto",
+  "Titanio",
 ] as const;
 
 export const memories = [16, 32, 64, 128, 256, 512, 1024] as const;

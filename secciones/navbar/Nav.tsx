@@ -58,7 +58,7 @@ const Nav = () => {
       return null; // No renderizar el Footer
     }
   return (
-    <div className="container flex h-16 items-center justify-center w-full px-4 md:w-[90%] md:px-0   bg-white">
+    <div className="flex h-16 items-center justify-center w-full px-4 md:w-[90%] md:px-0   bg-white">
       <div className="flex items-center justify-between w-full md:justify-start">
         {/* Logo */}
         <Link href="/" className="mr-4 flex-shrink-0 mb-2">

@@ -62,7 +62,7 @@ export default function DashboardLayout({
 
   return (
     <div className="flex items-center justify-center ">
-      <SidebarProvider className="w-[90%] lg:border-r border-gray-700 ">
+      <SidebarProvider className="w-[90%] lg:border-r border-gray-700  ">
         <div className="flex w-screen flex-row justify-start items-start">
           {/* Navbar (Solo para dispositivos móviles) */}
           <nav className=" h-[80px] lg:hidden bg-white flex items-center justify-between shadow-md p-4 fixed top-0 left-0 w-full z-20">

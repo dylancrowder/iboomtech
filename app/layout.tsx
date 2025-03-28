@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <header className="sticky top-0 z-50 border-b flex justify-center bg-white max-w-[100vw]">
+        <header className="sticky top-0 z-50 border-b flex justify-center bg-white w-full max-w-[100vw]">
           <Nav />
           <Toaster position="top-right" richColors />
         </header>

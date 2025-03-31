@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./sobre_nosotros.module.css";
-
+import { StaticImageData } from "next/image";
 // Iconos
 import icon_nuevo_color from "../../../assets/imagenes/sobrenosotros/nuevo-producto-azul.png";
 import icon_color_change from "../../../assets/imagenes/sobrenosotros/azul-change.png";
@@ -13,7 +13,12 @@ import icon_local_color from "../../../assets/imagenes/sobrenosotros/tienda-azul
 
 import chevronDown from "../../../assets/imagenes/sobrenosotros/abajo-chevron.png";
 import chevronUp from "../../../assets/imagenes/sobrenosotros/hasta-chevron.png";
-const Card = ({ icon, title, description }) => {
+interface CardProps {
+  icon: StaticImageData;
+  title: string;
+  description: string;
+}
+const Card: React.FC<CardProps> = ({ icon, title, description }) => {
   const { ref, inView } = useInView({
     triggerOnce: true, // Solo animar una vez
     threshold: 1, // Se activa cuando el 20% del componente está visible

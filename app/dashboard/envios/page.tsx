@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle} from "lucide-react";
 
 interface Envio {
   _id: string;

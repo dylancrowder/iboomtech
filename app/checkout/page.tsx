@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button"; // Button from ShadCN UI
 import { Input } from "@/components/ui/input"; // Input from ShadCN UI
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Cards from ShadCN UI
+import {  CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Cards from ShadCN UI
 import { Label } from "@/components/ui/label";
 import { useCarritoStore } from "@/zustand/carritoStore";
 import Link from "next/link";
@@ -81,22 +81,27 @@ const Pagos = () => {
         </div>
       </div>
       <div className="flex w-full justify-center items-center ">
-        <div className="flex justify-center w-[90%] bg-blue-500 ">
+        <div className="flex justify-center w-[90%] ">
           {/* contacto */}
-          <div className="w-[50%]  bg-teal-500">
+          <div className="w-[50%]  bg-tel-a050">
             {/* Sección de Contacto */}
-            <Card className="shadow-lg rounded-lg">
-              <CardHeader>
-                <CardTitle>Contacto</CardTitle>
+
+
+
+
+
+            <div className="pt-8 ">
+              <CardHeader className=" pb-2">
+                <CardTitle className="text-xl">Contacto</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="  ">
                   <div className="space-y-1">
-                    <Label>Email</Label>
+                    <Label className="pb-1">Email</Label>
                     <Input
                       type="email"
                       {...register("email")}
-                      className="w-full"
+                      className="w-full "
                     />
                     {errors.email && (
                       <p className="text-red-500 text-sm">
@@ -104,28 +109,28 @@ const Pagos = () => {
                       </p>
                     )}
                   </div>
-                  <div className="space-y-1">
-                    <Label>
+                  <div className="pt-2  flex items-center ">
+                    <Label className="pr-2">
                       Enviarme novedades y ofertas por correo electrónico
                     </Label>
                     <Input
                       type="checkbox"
                       {...register("novedades")}
-                      className="w-5 h-5"
+                      className="w-3 h-3 "
                     />
                   </div>
                 </form>
               </CardContent>
-            </Card>
+            </div>
 
             {/* Sección de Dirección */}
-            <Card className="shadow-lg rounded-lg">
-              <CardHeader>
-                <CardTitle>Dirección</CardTitle>
+            <div className=" pt-8">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl">Dirección</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="space-y-1">
+                  <div className="space-y-4">
                     <Label>Nombre</Label>
                     <Input
                       type="text"
@@ -200,10 +205,10 @@ const Pagos = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </div>
 
             {/* Sección de Métodos de Pago */}
-            <Card className="shadow-lg rounded-lg">
+            <div className="border-l ">
               <CardHeader>
                 <CardTitle>Método de Pago</CardTitle>
               </CardHeader>
@@ -233,7 +238,7 @@ const Pagos = () => {
                   </p>
                 </div>
               </CardContent>
-            </Card>
+            </div>
 
             <Button type="submit" className="w-full mt-4">
               Pagar ${total}
@@ -242,7 +247,7 @@ const Pagos = () => {
 
           {/* Resumen de Pedido */}
           <div className="w-[50%]  h-screen sticky top-0 bg-burlywood">
-            <Card className="shadow-lg rounded-lg h-[100%] ">
+            <div className="border-l  h-[100%] ">
               <CardHeader>
                 <CardTitle>Resumen del Pedido</CardTitle>
               </CardHeader>
@@ -269,7 +274,7 @@ const Pagos = () => {
                   <span className="text-green-600">${total.toFixed(2)}</span>
                 </div>
               </CardContent>
-            </Card>
+            </div>
           </div>
         </div>
       </div>{" "}

@@ -111,9 +111,12 @@ export default function Home() {
 
   if (error) {
     return (
-      <Alert className="bg-red-100 text-red-600 border-red-400 p-4 rounded-lg">
+      <div className="min-h-[100vh]">
+
+   
+      <Alert className="bg-red-100 text-red-600 border-red-400 p-4 rounded-lg ">
         <AlertDescription>{error}</AlertDescription>
-      </Alert>
+      </Alert>   </div>
     );
   }
   return (
@@ -128,7 +131,7 @@ export default function Home() {
                   key={product._id}
                   className="flex flex-col gap-0 h-auto overflow-hidden m-0 p-0 "
                 >
-                  <div className="relative w-full border flex items-center justify-center h-[290px]">
+                  <div className="relative w-fl border flex items-center justify-center h-[290px]">
                     <div className=" max-w-[180px]">
                       <Image
                         src={imageSrc}

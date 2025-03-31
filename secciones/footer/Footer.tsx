@@ -9,7 +9,11 @@ export function Footer() {
   const pathname = usePathname(); // Obtener la ruta actual
 
   // Si la ruta comienza con "/dashboard", no se renderiza el Footer
-  if (pathname.startsWith("/dashboard")) {
+  if (
+    pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/checkout")
+  ) {
     return null; // No renderizar el Footer
   }
 
@@ -38,7 +42,7 @@ export function Footer() {
               <div className="flex flex-row justify-start space-x-4">
                 <Link
                   href="https://wa.me/yourphonenumber"
-                  className="hover:underline  dark:text-gray-400"
+                  className="hover:underline  dark:text-gray-400 "
                   aria-label="WhatsApp"
                 >
                   <MessageCircle className="w-6 h-6" />
@@ -58,7 +62,7 @@ export function Footer() {
               <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Categorías
               </h2>
-              <ul className=" dark:text-gray-400 font-medium">
+              <ul className=" dark:text-gray-400 ">
                 <li className="mb-1">
                   <Link href="#" className="hover:underline">
                     iPhones
@@ -88,11 +92,11 @@ export function Footer() {
             </div>
 
             {/* Contact Section */}
-            <div>
+            <div className="">
               <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Contacto
               </h2>
-              <ul className=" dark:text-gray-400 font-medium">
+              <ul className=" dark:text-gray-400 ">
                 <li className="mb-1">
                   <Link
                     href="mailto:contacto@comidaonline.com"

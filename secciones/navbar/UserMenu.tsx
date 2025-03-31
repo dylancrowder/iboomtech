@@ -1,9 +1,7 @@
-"use client"
-
-import { User } from "lucide-react"
-import Link from "next/link"
-
-import { Button } from "@/components/ui/button"
+import { User } from "lucide-react";
+import Link from "next/link";
+import { LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,18 +9,54 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react"; // Asegúrate de importar useState
+import useAuthStore from "@/zustand/useAuthStore";
 
 export default function UserMenu() {
-  // This is a placeholder - you would typically check authentication state here
-  const isAuthenticated = false
+  // Este es el estado que controla la visibilidad del drawer
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuthStore(); // Suponiendo que tienes un método 'logout' en tu store
+
+  // Función para cerrar el drawer
+  const handleLoginClick = () => {
+    setIsDrawerOpen(false); // Cierra el drawer al hacer clic en "Iniciar sesión"
+  };
+
+  const cerrar = async () => {
+    try {
+      // Aquí se hace el fetch al backend para cerrar sesión
+      const response = await fetch("http://localhost:8085/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Asegúrate de enviar cookies si las hay
+      });
+
+      if (response.ok) {
+        // Si la respuesta es exitosa, limpiar el estado de autenticación
+        logout(); // Suponiendo que tienes una función logout en tu store de Zustand
+        console.log("Sesión cerrada");
+      } else {
+        console.error("Error al cerrar sesión");
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
+  };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="rounded-full cursor-pointer">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full cursor-pointer"
+          onClick={() => setIsDrawerOpen(true)} // Abre el drawer al hacer clic
+        >
           <User className="h-5 w-5" />
-          <span className="sr-only" >Menú de usuario</span>
+          <span className="sr-only">Menú de usuario</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -40,20 +74,21 @@ export default function UserMenu() {
               <Link href="/favoritos">Favoritos</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
+            <DropdownMenuItem onClick={cerrar}>Cerrar sesión</DropdownMenuItem>
           </>
         ) : (
           <>
-            <DropdownMenuItem asChild>
-              <Link href="/login">Iniciar sesión</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/registro">Registrarse</Link>
-            </DropdownMenuItem>
+            <div className="w-full flex flex-col justify-between p-1">
+              <DropdownMenuItem asChild>
+                <Button className="w-full" onClick={handleLoginClick}>
+                  <LogIn className="mr-2 text-white" />
+                  <Link href="/login">Iniciar sesión</Link>
+                </Button>
+              </DropdownMenuItem>
+            </div>
           </>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
-

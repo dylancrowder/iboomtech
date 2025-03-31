@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -8,6 +9,9 @@ import {
   Check,
   ChevronDown,
   Smartphone,
+  Tablet,
+  Laptop,
+  Package,
 } from "lucide-react";
 
 import {
@@ -35,14 +39,16 @@ import { useEffect } from "react";
 
 const categories = [
   { id: "iphone", name: "iPhone", icon: Smartphone },
-  { id: "ipad", name: "iPad", icon: Smartphone },
-  { id: "macbook", name: "MacBook", icon: Smartphone },
+  { id: "ipad", name: "iPad", icon: Tablet },
+  { id: "macbook", name: "MacBook", icon: Laptop },
   { id: "android", name: "Android", icon: Smartphone },
-  { id: "accessories", name: "Accesorios", icon: Smartphone },
+  { id: "accessories", name: "Accesorios", icon: Package },
 ];
 
 // Filter content component shared between desktop and mobile
 function FilterContent({
+  selectedCondition,
+  setSelectedCondition,
   selectedCategory,
   setSelectedCategory,
   selectedModels,
@@ -52,6 +58,8 @@ function FilterContent({
   selectedMemory,
   setSelectedMemory,
 }: {
+  selectedCondition: any;
+  setSelectedCondition: any;
   selectedCategory: string | null;
   setSelectedCategory: (category: string) => void;
   selectedModels: string[];
@@ -66,6 +74,7 @@ function FilterContent({
   const setModel = useFilterStore((state: any) => state.setModel);
   const setColor = useFilterStore((state: any) => state.setColor);
   const setMemory = useFilterStore((state: any) => state.setMemory);
+  const setCondition = useFilterStore((state: any) => state.setCondition);
   const { sortOrder, setSortOrder } = useFilterStore();
   const setCategory = useFilterStore((state: any) => state.setCategory);
   const { models, colors, memories } = useProductStores();
@@ -144,6 +153,15 @@ function FilterContent({
     }
   };
 
+  function setSelectedConditions(condicion: any) {
+    if (selectedCondition === condicion) {
+      setSelectedCondition("");
+    } else {
+      setSelectedCondition(condicion);
+      setCondition(condicion);
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4 overflow-y-auto border border-gray-200 rounded-lg p-4 shadow-sm bg-white">
       {/* Categories */}
@@ -215,6 +233,49 @@ function FilterContent({
           <Separator className="my-4" />
         </div>
       )}
+
+      {/* Condición */}
+      <div>
+        <h3 className="font-medium mb-2">Condición</h3>
+        <RadioGroup
+          value={selectedCondition}
+          onValueChange={setSelectedConditions} // Asegúrate de que sea 'setSelectedCondition' y no plural
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem
+              value=""
+              id="condition-todos"
+              className="cursor-pointer"
+            />
+            <Label htmlFor="condition-nuevo" className="cursor-pointer ">
+              Todos
+            </Label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem
+              value="nuevo"
+              id="condition-nuevo"
+              className="cursor-pointer"
+            />
+            <Label htmlFor="condition-nuevo" className="cursor-pointer">
+              Nuevo
+            </Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem
+              value="usado"
+              id="condition-usado"
+              className="cursor-pointer"
+            />
+            <Label htmlFor="condition-usado" className="cursor-pointer">
+              Usado
+            </Label>
+          </div>
+        </RadioGroup>
+      </div>
+
+      <Separator />
 
       {/* Colors */}
       {selectedCategory && selectedCategory !== "accessories" && (
@@ -354,7 +415,9 @@ export default function ProductFilterSidebar() {
   const [selectedModels, setSelectedModels] = React.useState<string[]>([]);
   const [selectedColors, setSelectedColors] = React.useState<string[]>([]);
   const [selectedMemory, setSelectedMemory] = React.useState<string[]>([]);
-
+  const [selectedCondition, setSelectedCondition] = React.useState<string[]>(
+    []
+  );
   const [isOpen, setIsOpen] = React.useState(false);
   const { category } = useFilterStore(); // Obtener la categoría del store
 
@@ -377,6 +440,8 @@ export default function ProductFilterSidebar() {
             className="w-[85%] sm:w-[350px] overflow-y-auto"
           >
             <FilterContent
+              selectedCondition={selectedCondition}
+              setSelectedCondition={setSelectedCondition}
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
               selectedModels={selectedModels}
@@ -394,6 +459,8 @@ export default function ProductFilterSidebar() {
       {/* Desktop Sidebar */}
       <div className="hidden lg:block h-full overflow-y-auto pr-6 ">
         <FilterContent
+          selectedCondition={selectedCondition}
+          setSelectedCondition={setSelectedCondition}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
           selectedModels={selectedModels}

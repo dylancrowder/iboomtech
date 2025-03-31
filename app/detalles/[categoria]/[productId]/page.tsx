@@ -1,19 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Badge } from "@/components/ui/badge";
 import { useParams } from "next/navigation";
 import { Progress } from "@/components/ui/progress";
@@ -36,6 +30,9 @@ interface Product {
   updatedAt: string;
 }
 
+import { useImageForProduct } from "@/hooks/imagenes";
+
+
 export default function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -44,9 +41,8 @@ export default function ProductDetails() {
   const { categoria, productId } = useParams();
 
   // Determine product type based on category
-  const isPhone = categoria === "iphones" || categoria === "android";
+  const isPhone = categoria === "iphone" || categoria === "android";
   const isMacbook = categoria === "macbooks";
-  /*   const isAccessory = categoria === "accesorios"; */
 
   const fetchProductos = async () => {
     try {
@@ -124,9 +120,9 @@ export default function ProductDetails() {
   // Get condition text in Spanish
   const getConditionText = (condition: string) => {
     switch (condition.toLowerCase()) {
-      case "new":
+      case "nuevo":
         return "Nuevo";
-      case "used":
+      case "usado":
         return "Usado";
       case "refurbished":
         return "Reacondicionado";
@@ -135,28 +131,23 @@ export default function ProductDetails() {
     }
   };
 
-  // Get icon based on category
-  /*   const getCategoryIcon = () => {
-    if (isPhone) return <Smartphone className="h-5 w-5 mr-2" />;
-    if (isMacbook) return <Laptop className="h-5 w-5 mr-2" />;
-    return <Info className="h-5 w-5 mr-2" />;
-  }; */
+  const imageSrc = useImageForProduct(product.model, product.color);
 
   if (loading) return <div className="text-center p-6">Cargando...</div>;
   if (error) return <div className="text-red-500 text-center">{error}</div>;
 
   return (
-    <div className="container mx-auto  py-4 max-w-[90%]">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
+    <div className="container mx-auto py-4 max-w-[90%]  lg:pb-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Product Image - Single image only */}
+
         <div>
-          <Card>
-            <CardContent className="p-2">
+          <Card className=" flex items-center justify-center">
+            <CardContent className="p-4 lg:w-[60%]">
               <Image
-                src="/placeholder.svg?height=600&width=600"
-                alt={product.model}
-                width={600}
-                height={600}
+                src={imageSrc}
+                alt={imageSrc}
+                width={200}
                 className="w-full h-auto rounded-md"
               />
             </CardContent>
@@ -184,8 +175,7 @@ export default function ProductDetails() {
               ${product.price.toLocaleString()}
             </p>
           </div>
-
-          {isPhone && (
+          {isPhone && product.condition.toLowerCase() !== "nuevo" && (
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">
@@ -212,7 +202,7 @@ export default function ProductDetails() {
               <h3 className="font-medium mb-2">Color</h3>
               <div className="flex items-center space-x-3">
                 <div
-                  className={`w-6 h-6 rounded-full  ${getColorBackground(
+                  className={`w-6 h-6 rounded-full ${getColorBackground(
                     product.color
                   )}`}
                 ></div>
@@ -231,37 +221,16 @@ export default function ProductDetails() {
                 </div>
               </div>
             )}
-
-            <div>
-              <h3 className="font-medium mb-2">Cantidad</h3>
-              <Select defaultValue="1">
-                <SelectTrigger className="w-24">
-                  <SelectValue placeholder="Cantidad" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>
-                      {num}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
           </div>
 
           <div className="pt-4">
             <Button
-              className="w-full cursor-pointer"
+              className="w-full text-sm h-10 cursor-pointer mt-2 bg-[#1f1f1f] text-white hover:bg-[#333] active:bg-[#111] transition-all duration-200"
               size="lg"
               onClick={() => {
                 if (product) {
                   agregarAlCarrito(product);
-                  toast.success(`${product.model} añadido al carrito`, {
-                    action: {
-                      label: "Ver carrito",
-                      onClick: () => console.log("Ir al carrito"),
-                    },
-                  });
+                  toast.success(`${product.model} añadido al carrito`, {});
                 }
               }}
             >
@@ -274,7 +243,7 @@ export default function ProductDetails() {
 
           <Tabs defaultValue="specs">
             <TabsList className="grid w-full grid-cols-2 ">
-              <TabsTrigger className="cursor-pointer" value="specs ">
+              <TabsTrigger className="cursor-pointer" value="specs">
                 Especificaciones
               </TabsTrigger>
               <TabsTrigger className="cursor-pointer" value="condition">
@@ -352,7 +321,7 @@ export default function ProductDetails() {
                     Clasificación: {getConditionText(product.condition)}
                   </p>
                   <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground mt-2">
-                    {product.condition.toLowerCase() === "used" && (
+                    {product.condition.toLowerCase() === "usado" && (
                       <>
                         <li>
                           Dispositivo usado en buen estado estético y funcional
@@ -362,7 +331,7 @@ export default function ProductDetails() {
                         <li>Batería al {product.batteryStatus}%</li>
                       </>
                     )}
-                    {product.condition.toLowerCase() === "new" && (
+                    {product.condition.toLowerCase() === "nuevo" && (
                       <>
                         <li>Dispositivo nuevo, sin abrir</li>
                         <li>Garantía completa del fabricante</li>

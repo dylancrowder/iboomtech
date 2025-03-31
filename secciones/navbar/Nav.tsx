@@ -19,6 +19,7 @@ import CartMenu from "./CartMenu";
 import UserMenu from "./UserMenu";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import useAuthStore from "@/zustand/useAuthStore";
 
 const products = [
   {
@@ -50,21 +51,20 @@ const products = [
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname(); // Obtener la ruta actual
+  const { isAuthenticated } = useAuthStore();
+  // Si la ruta comienza con "/dashboard", no se renderiza el Footer
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/checkout")) {
+    return null; // No renderizar el Footer
+  }
 
-    const pathname = usePathname(); // Obtener la ruta actual
-  
-    // Si la ruta comienza con "/dashboard", no se renderiza el Footer
-    if (pathname.startsWith("/dashboard")) {
-      return null; // No renderizar el Footer
-    }
   return (
-    <div className="flex h-16 items-center justify-center w-full px-4 md:w-[90%] md:px-0   bg-white">
+    <div className="flex h-16 items-center justify-center w-full px-4 md:w-[90%] md:px-0 bg-white">
       <div className="flex items-center justify-between w-full md:justify-start">
         {/* Logo */}
         <Link href="/" className="mr-4 flex-shrink-0 mb-2">
-          {/* Placeholder for logo - replace with your actual logo */}
           <div className="h-8 w-32 md:h-10 md:w-50 flex items-center ">
-            <Image src={logo} alt="logo"></Image>
+            <Image src={logo} alt="logo" />
           </div>
         </Link>
 
@@ -108,11 +108,14 @@ const Nav = () => {
               </Button>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
-              <Button variant="ghost" asChild className="px-4">
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
-            </NavigationMenuItem>
+            {/* Show Dashboard link only if authenticated */}
+            {isAuthenticated && (
+              <NavigationMenuItem>
+                <Button variant="ghost" asChild className="px-4">
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </NavigationMenuItem>
+            )}
           </NavigationMenuList>
         </NavigationMenu>
       </div>
@@ -139,7 +142,7 @@ const Nav = () => {
             <div className="flex flex-col gap-4 py-4">
               <div className="flex justify-between items-center mb-4">
                 <div className="sm:hidden flex gap-2">
-                  <UserMenu  />
+                  <UserMenu />
                   <CartMenu />
                 </div>
               </div>
@@ -158,13 +161,17 @@ const Nav = () => {
               >
                 Contacto
               </Link>
-              <Link
-                href="/dashboard"
-                className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </Link>
+
+              {/* Show Dashboard link only if authenticated in mobile menu */}
+              {isAuthenticated && (
+                <Link
+                  href="/dashboard"
+                  className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              )}
 
               <div className="px-4 pt-4 pb-2 font-medium">Categorías</div>
               {products.map((product) => (

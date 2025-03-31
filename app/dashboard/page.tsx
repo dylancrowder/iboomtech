@@ -1,10 +1,10 @@
-const Page = () => {
+"use client";
+
+export default function Dashboard() {
   return (
-    <div className="">
-      <h1>Dashboard Page</h1>
-      <p>Welcome to the dashboard!</p>
+    <div>
+      <h1>Dashboard</h1>
+      <p>Bienvenido a tu panel</p>
     </div>
   );
-};
-
-export default Page;
+}

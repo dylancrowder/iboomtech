@@ -32,6 +32,10 @@ import logo from "../../assets/imagenes/logotipo/LOGO-negro-iboom.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import useAuthStore from "@/zustand/useAuthStore";
+
 export default function DashboardLayout({
   children,
 }: {
@@ -50,7 +54,7 @@ export default function DashboardLayout({
     { label: "Android", path: "/dashboard/editar/android" },
     { label: "Accesorios", path: "/dashboard/editar/accesorios" },
   ];
-
+  const pathname = usePathname();
   const handleNavClick = () => {
     setIsSidebarOpen(false);
     setActiveMenu(null);
@@ -58,8 +62,17 @@ export default function DashboardLayout({
     setActiveItemStock(null);
   };
 
-  const pathname = usePathname();
+  const { isAuthenticated } = useAuthStore();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login"); // Redirige a la página de inicio de sesión
+    }
+  }, [isAuthenticated, router]);
+  // Evita renderizar el contenido mientras redirige
+
+  if (!isAuthenticated) return null;
   return (
     <div className="flex items-center justify-center ">
       <SidebarProvider className="w-[90%] lg:border-r border-gray-700  ">

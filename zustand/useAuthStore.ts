@@ -6,6 +6,7 @@ interface AuthState {
   userInfo: { name: string; role: string } | null;
   setAuthenticated: (authStatus: boolean) => void;
   setUserInfo: (info: { name: string; role: string }) => void;
+  logout: () => void; // Nueva función para cerrar sesión
 }
 
 const useAuthStore = create<AuthState>()(
@@ -15,6 +16,7 @@ const useAuthStore = create<AuthState>()(
       userInfo: null,
       setAuthenticated: (authStatus) => set({ isAuthenticated: authStatus }),
       setUserInfo: (info) => set({ userInfo: info }),
+      logout: () => set({ isAuthenticated: false, userInfo: null }), // Limpia el estado
     }),
     {
       name: "auth-storage", // Nombre de la clave en localStorage

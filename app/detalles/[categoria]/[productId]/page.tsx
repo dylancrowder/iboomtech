@@ -44,7 +44,7 @@ export default function ProductDetails() {
   const isMacbook = categoria === "macbooks";
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8085";
-
+  console.log("esta es la uri ", apiUrl);
 
   const fetchProductos = async () => {
     try {

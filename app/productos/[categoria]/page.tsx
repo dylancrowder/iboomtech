@@ -41,6 +41,7 @@ export default function Home() {
   }
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+console.log("esta es la uri ", apiUrl);
 
   useEffect(() => {
     const fetchProducts = async () => {

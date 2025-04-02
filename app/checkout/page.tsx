@@ -71,7 +71,7 @@ export default function CheckoutPage() {
   });
 
   const onSubmit = async (data: FormData) => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8085";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ;
     console.log("Form data:", data);
 
     if (carrito.length === 0) {

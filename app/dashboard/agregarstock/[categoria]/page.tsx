@@ -52,8 +52,10 @@ export default function ProductForm() {
   });
 
   async function onSubmit(data: ProductFormValues) {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     try {
-      const response = await fetch("http://localhost:8085/dashboard/crear", {
+      const response = await fetch(`${apiUrl}/dashboard/crear`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

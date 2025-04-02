@@ -71,6 +71,7 @@ export default function CheckoutPage() {
   });
 
   const onSubmit = async (data: FormData) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8085";
     console.log("Form data:", data);
 
     if (carrito.length === 0) {
@@ -81,7 +82,8 @@ export default function CheckoutPage() {
     try {
       // This would be replaced with your actual API endpoint
       const response = await fetch(
-        "http://localhost:8085/api/payments/create_preference",
+        `${apiUrl}/api/payments/create_preference`,
+
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

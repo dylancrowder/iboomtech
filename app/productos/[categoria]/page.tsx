@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
@@ -39,6 +40,8 @@ export default function Home() {
     color: string;
   }
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -53,7 +56,7 @@ export default function Home() {
         params.append("sortOrder", sortOrder === "des" ? "asc" : "desc");
 
         const response = await fetch(
-          `http://localhost:8085/${categoria}/get-all?${params.toString()}`
+          `${apiUrl}/${categoria}/get-all?${params.toString()}`
         );
 
         if (!response.ok) {
@@ -112,11 +115,10 @@ export default function Home() {
   if (error) {
     return (
       <div className="min-h-[100vh]">
-
-   
-      <Alert className="bg-red-100 text-red-600 border-red-400 p-4 rounded-lg ">
-        <AlertDescription>{error}</AlertDescription>
-      </Alert>   </div>
+        <Alert className="bg-red-100 text-red-600 border-red-400 p-4 rounded-lg ">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>{" "}
+      </div>
     );
   }
   return (

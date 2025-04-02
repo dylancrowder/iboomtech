@@ -32,7 +32,6 @@ interface Product {
 
 import { useImageForProduct } from "@/hooks/imagenes";
 
-
 export default function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -44,10 +43,13 @@ export default function ProductDetails() {
   const isPhone = categoria === "iphone" || categoria === "android";
   const isMacbook = categoria === "macbooks";
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8085";
+
+
   const fetchProductos = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8085/${categoria}/get-id/${productId}`
+        `${apiUrl}/${categoria}/get-id/${productId}`
       );
 
       if (!response.ok) {

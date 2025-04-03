@@ -41,7 +41,7 @@ export default function Home() {
   }
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-console.log("esta es la uri ", apiUrl);
+  console.log("esta es la uri ", apiUrl);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -141,7 +141,8 @@ console.log("esta es la uri ", apiUrl);
                         alt={`${product.model} ${product.color}`}
                         width={180}
                         height={180}
-                        className="object-cover"
+                        priority
+                        className="object-cover w-auto h-auto"
                       />
                     </div>
                   </div>

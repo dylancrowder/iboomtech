@@ -76,7 +76,7 @@ const Nav = () => {
         {/* Logo */}
         <Link href="/" className="mr-4 flex-shrink-0 mb-2">
           <div className="h-8 w-32 md:h-10 md:w-50 flex items-center ">
-            <Image src={logo} alt="logo" />
+            <Image src={logo} alt="logo" priority />
           </div>
         </Link>
 
@@ -221,8 +221,6 @@ const Nav = () => {
                 ))}
               </div>
             </div>
-
-    
           </SheetContent>
         </Sheet>
       </div>

@@ -44,7 +44,6 @@ export default function ProductDetails() {
   const isMacbook = categoria === "macbooks";
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8085";
-  console.log("esta es la uri ", apiUrl);
 
   const fetchProductos = async () => {
     try {
@@ -57,7 +56,6 @@ export default function ProductDetails() {
       }
 
       const data: Product = await response.json();
-      console.log(data);
 
       setProduct(data);
     } catch (error) {
@@ -151,6 +149,7 @@ export default function ProductDetails() {
                 alt={imageSrc}
                 width={200}
                 className="w-full h-auto rounded-md"
+                priority
               />
             </CardContent>
           </Card>

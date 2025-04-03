@@ -88,7 +88,7 @@ const SobreNosotros = () => {
       icon: icon_nuevo_color,
       title: "Productos Nuevos",
       description:
-        "Intercambiamos tu iPhone por uno nuevo o reacondicionado, con garantía incluida.",
+        "Vendemos productos nuevos, sellados en caja y con garantía incluida.",
     },
     {
       icon: icon_color_change,

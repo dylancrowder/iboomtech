@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { ChevronRight, Home, Menu, Phone, ShoppingBag } from "lucide-react";
 import logo from "../../assets/imagenes/logotipo/LOGO-negro-iboom.png";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,39 +13,51 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import CartMenu from "./CartMenu";
 import UserMenu from "./UserMenu";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import useAuthStore from "@/zustand/useAuthStore";
+import { Separator } from "@/components/ui/separator";
 
 const products = [
   {
     title: "iPhones",
     href: "/productos/iphone",
     description: "Descubre la última generación de iPhones",
+    icon: "📱",
   },
   {
     title: "Android",
     href: "/productos/android",
     description: "Explora nuestra selección de smartphones Android",
+    icon: "📱",
   },
   {
     title: "Accesorios",
     href: "/productos/accesorios",
     description: "Complementos y accesorios para tus dispositivos",
+    icon: "🎧",
   },
   {
     title: "MacBooks",
     href: "/productos/macbooks",
     description: "Potentes laptops para trabajo y creatividad",
+    icon: "💻",
   },
   {
     title: "iPads",
     href: "/productos/ipads",
     description: "Tablets versátiles para todo tipo de usuarios",
+    icon: "📟",
   },
 ];
 
@@ -130,6 +142,7 @@ const Nav = () => {
         </div>
 
         {/* Mobile menu button */}
+        {/* Mobile menu button */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -137,54 +150,79 @@ const Nav = () => {
               <span className="sr-only">Abrir menú</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-            {/* Mobile Menu Content */}
-            <div className="flex flex-col gap-4 py-4">
-              <div className="flex justify-between items-center mb-4">
-                <div className="sm:hidden flex gap-2">
-                  <UserMenu />
-                  <CartMenu />
-                </div>
+          <SheetContent side="right" className="w-[85vw] sm:w-[400px] p-0">
+            {/* Mobile Menu Header */}
+            <SheetHeader className="p-4 border-b">
+              <SheetTitle className="text-left">Menú</SheetTitle>
+            </SheetHeader>
+
+            {/* User and Cart in mobile */}
+            <div className="flex justify-between items-center p-4 bg-muted/30">
+              <div className="sm:hidden flex gap-2 w-full justify-between">
+                <UserMenu />
+                <CartMenu />
               </div>
+            </div>
+
+            {/* Main Navigation Links */}
+            <div className="p-4">
+              <Link
+                href="/"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-accent rounded-md mb-1"
+                onClick={() => setIsOpen(false)}
+              >
+                <Home size={18} />
+                <span>Inicio</span>
+              </Link>
 
               <Link
-                href="/productos"
-                className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Productos
-              </Link>
-              <Link
                 href="/contacto"
-                className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md"
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-accent rounded-md"
                 onClick={() => setIsOpen(false)}
               >
-                Contacto
+                <Phone size={18} />
+                <span>Contacto</span>
               </Link>
 
               {/* Show Dashboard link only if authenticated in mobile menu */}
               {isAuthenticated && (
                 <Link
                   href="/dashboard"
-                  className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md"
+                  className="flex items-center gap-3 px-4 py-3 text-sm font-medium hover:bg-accent rounded-md"
                   onClick={() => setIsOpen(false)}
                 >
-                  Dashboard
+                  <ShoppingBag size={18} />
+                  <span>Dashboard</span>
                 </Link>
               )}
-
-              <div className="px-4 pt-4 pb-2 font-medium">Categorías</div>
-              {products.map((product) => (
-                <Link
-                  key={product.title}
-                  href={product.href}
-                  className="px-4 py-2 text-sm hover:bg-accent rounded-md"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {product.title}
-                </Link>
-              ))}
             </div>
+
+            <Separator />
+
+            {/* Categories Section */}
+            <div className="p-4">
+              <h3 className="font-medium text-sm text-muted-foreground mb-2 px-4">
+                CATEGORÍAS
+              </h3>
+              <div className="space-y-1">
+                {products.map((product) => (
+                  <Link
+                    key={product.title}
+                    href={product.href}
+                    className="flex items-center justify-between px-4 py-3 text-sm hover:bg-accent rounded-md"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg">{product.icon}</span>
+                      <span>{product.title}</span>
+                    </div>
+                    <ChevronRight size={16} className="text-muted-foreground" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+    
           </SheetContent>
         </Sheet>
       </div>

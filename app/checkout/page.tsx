@@ -113,7 +113,7 @@ export default function CheckoutPage() {
         <div className="flex flex-col md:flex-row justify-center w-[90%] gap-6">
           {/* Order Summary - Now first on mobile but not overlapping */}
           <div className="w-full md:w-1/2 md:order-2 border-b pb-4 mb-4 md:border-b-0 md:border-l md:pb-0 md:mb-0 bg-muted p-4 md:p-8 ">
-            <div className="w-full">
+            <div className="">
               <div className="mb-6">
                 <CardTitle className="text-xl">Resumen del Pedido</CardTitle>
               </div>

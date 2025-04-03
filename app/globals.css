@@ -90,9 +90,11 @@
 .swiper-pagination-bullet {
   background-color: #3e3ff5 !important; /* Color del círculo */
 }
-.body{
 
+* {
+  pointer-events: auto !important;
 }
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

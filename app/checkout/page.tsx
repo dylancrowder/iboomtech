@@ -124,8 +124,8 @@ export default function CheckoutPage() {
       <div className="flex w-full justify-center items-center">
         <div className="flex flex-col md:flex-row justify-center w-[90%] gap-6">
           {/* Order Summary - Now first on mobile */}
-          <div className="w-full md:w-1/2 md:order-2 border-b md:border-b-0 md:border-l bg-muted p-4 md:p-8 md:h-screen md:sticky md:top-0">
-            <div className="w-full h-full">
+          <div className="w-full md:w-1/2 md:order-2 bg-blue-500 border-b md:border-b-0 md:border-l  p-4 md:p-8 md:h-screen md:sticky md:top-0">
+            <div className="w-full h-full ">
               <div className="mb-6">
                 <CardTitle className="text-xl">Resumen del Pedido</CardTitle>
               </div>

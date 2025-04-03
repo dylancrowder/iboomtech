@@ -19,8 +19,10 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     try {
-      const response = await fetch("http://localhost:8085/auth/login", {
+      const response = await fetch(`${apiUrl}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

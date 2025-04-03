@@ -38,6 +38,7 @@ export default function Home() {
     price: number;
     memory: string;
     color: string;
+    batteryStatus: number;
   }
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -70,6 +71,7 @@ export default function Home() {
         setProductsData(data);
         setProducts(data);
         setCategory(categoria);
+        console.log(data);
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -137,7 +139,7 @@ export default function Home() {
                   <div className="relative w-fl border flex items-center justify-center h-[290px]">
                     <div className=" max-w-[180px]">
                       <Image
-                        src={imageSrc}
+                        src={imageSrc || "/placeholder.svg"}
                         alt={`${product.model} ${product.color}`}
                         width={180}
                         height={180}
@@ -150,7 +152,7 @@ export default function Home() {
                   <div className="flex flex-col flex-1 items-start w-full py-4 px-4 ">
                     <CardHeader className="w-full m-0 p-0 pb-1 ">
                       <h3 className="font-medium text-base line-clamp-1">
-                        {product.model} {product.color.toLowerCase()}
+                        {product.model} {product.color} - {product.memory} GB
                       </h3>
                     </CardHeader>
 
@@ -166,7 +168,13 @@ export default function Home() {
                           {product.condition}
                         </Badge>
                         <span className="text-xs text-muted-foreground">
-                          {product.memory} GB
+                          {/* Show battery percentage only for used products */}
+                          {product.condition === "usado" &&
+                            product.batteryStatus && (
+                              <span className="ml-1">
+                                {product.batteryStatus}% batería
+                              </span>
+                            )}
                         </span>
                       </div>
                       <p className="font-bold text-lg">${product.price}</p>

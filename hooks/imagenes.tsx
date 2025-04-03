@@ -10,17 +10,17 @@ import iphone_xr_coral from "../assets/imagenes/imagenes-iphones/iphone-xr/iphon
 import iphone_xr_negro from "../assets/imagenes/imagenes-iphones/iphone-xr/iphone-xr-negro.jpg";
 import iphone_xr_rojo from "../assets/imagenes/imagenes-iphones/iphone-xr/iphone-xr-rojo.jpg";
 //iphone 11
-import iphone_11_rojo from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-negro.jpg";
-import iphone_11_amarillo from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-amarillo.jpg";
-import iphone_11_blanco from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-blanco.jpg";
-import iphone_11_verde from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-verde.jpg";
-import iphone_11_morado from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-morado.jpg";
-import iphone_11_negro from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-negro.jpg";
+import iphone_11_rojo from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-negro.webp";
+import iphone_11_amarillo from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-amarillo.webp";
+import iphone_11_blanco from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-blanco.webp";
+import iphone_11_verde from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-verde.webp";
+import iphone_11_morado from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-morado.webp";
+import iphone_11_negro from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11-negro.webp";
 //iphone 11 pro
-import iphone_11pro_grisEspacial from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-grisEspacial.jpg";
-import iphone_11pro_oro from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-oro.jpg";
-import iphone_11pro_plata from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-plata.jpg";
-import iphone_11pro_verdeNoche from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-verdeNoche.jpg";
+import iphone_11pro_grisEspacial from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-grisEspacial.webp";
+import iphone_11pro_oro from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-oro.webp";
+import iphone_11pro_plata from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-plata.webp";
+import iphone_11pro_verdeNoche from "../assets/imagenes/imagenes-iphones/iphone-11/iphone-11pro-verdeNoche.webp";
 //iphone 12
 import iphone_12_azul from "../assets/imagenes/imagenes-iphones/iphone-12/iphone-12-azul.jpg";
 import iphone_12_rojo from "../assets/imagenes/imagenes-iphones/iphone-12/iphone-12-rojo.jpg";

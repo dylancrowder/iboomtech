@@ -127,7 +127,7 @@
   }
   .aboutText {
     font-weight: 500;
-    font-size: 1.5rem; /* Reduce el tamaño del texto en pantallas pequeñas */
+    font-size: 1.6rem; /* Reduce el tamaño del texto en pantallas pequeñas */
   }
 
   .grid_container {
@@ -140,11 +140,12 @@
   }
 
   .icon_img {
-    width: 55px; /* Reduzco el tamaño del ícono en pantallas pequeñas */
+    width: 60px; /* Reduzco el tamaño del ícono en pantallas pequeñas */
   }
 
   .subtitle_about {
-    font-size: 1.3rem; /* Ajusta el tamaño del subtítulo */
+  
+    font-size: 1.2rem; /* Ajusta el tamaño del subtítulo */
   }
 
   .chevron_icon {

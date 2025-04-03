@@ -118,10 +118,8 @@ const SobreNosotros = () => {
       <div className={styles.gen}>
         <div className={styles.cnt_title}>
           <p className={styles.aboutText}>
-            En <strong>iBoomTech</strong>, nos especializamos en ofrecer
-            productos tecnológicos,
-            <br /> tanto nuevos como de segunda mano, con garantía y a precios
-            competitivos.
+            En <strong>iBoomTech</strong> ofrecemos productos tecnológicos,
+            nuevos y de segunda mano con garantía.
           </p>
         </div>
         <div className={styles.flex}>

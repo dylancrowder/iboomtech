@@ -126,7 +126,8 @@
     margin-top: 0px;
   }
   .aboutText {
-    font-size: 1.2rem; /* Reduce el tamaño del texto en pantallas pequeñas */
+    font-weight: 500;
+    font-size: 1.5rem; /* Reduce el tamaño del texto en pantallas pequeñas */
   }
 
   .grid_container {

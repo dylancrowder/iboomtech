@@ -31,7 +31,6 @@
   flex-direction: column;
   width: 250px;
   height: 100%;
-
 }
 
 /* imagenes */
@@ -70,7 +69,8 @@
   font-weight: bolder;
 }
 .subtitle_card {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: rgb(128, 130, 131);
 }
 
 .boton {
@@ -81,9 +81,8 @@
   color: white;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .tit {
-
     font-weight: bolder;
     width: 100%;
     font-size: 2rem;
@@ -97,15 +96,12 @@
     align-items: center;
     margin-block: var(--altura-nav);
     width: 100%;
-  
-
   }
 
   .page {
     display: flex;
     flex-direction: column;
     gap: var(--altura-nav);
-
   }
 
   .padre {
@@ -113,7 +109,5 @@
     justify-content: center;
     align-items: center;
     height: auto;
-
- 
   }
 }

@@ -70,6 +70,7 @@ const Card: React.FC<CardProps> = ({ icon, title, description }) => {
                 initial={{ y: 20, opacity: 0 }}
                 animate={abrir ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                className={styles.desc}
               >
                 {description}
               </motion.p>

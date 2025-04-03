@@ -74,6 +74,7 @@
 .subtitle_about {
   font-size: 1.6rem;
   margin-left: 18px;
+  font-weight: 500;
 }
 
 .motion_ctn {
@@ -115,6 +116,9 @@
   transform: rotate(180deg);
 }
 
+.desc {
+  color: rgb(128, 130, 131);
+}
 @media (max-width: 768px) {
   .aboutText {
     font-size: 1.2rem; /* Reduce el tamaño del texto en pantallas pequeñas */
@@ -159,6 +163,5 @@
     height: auto;
     width: 90%;
     gap: var(--altura-nav);
-
   }
 }

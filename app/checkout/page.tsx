@@ -1,50 +1,62 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import Link from "next/link"
-import Image from "next/image"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Link from "next/link";
+import Image from "next/image";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 // UI Components
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Label } from "@/components/ui/label"
-import { CardContent, CardTitle, Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { CardContent, CardTitle, Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 // Icons
-import { ShieldCheck, Store, Truck } from "lucide-react"
-import { useCarritoStore } from "@/zustand/carritoStore"
+import { ShieldCheck, Store, Truck } from "lucide-react";
+import { useCarritoStore } from "@/zustand/carritoStore";
 
 //images
-import logo from "../../assets/imagenes/logotipo/LOGO-negro-iboom.png"
+import logo from "../../assets/imagenes/logotipo/LOGO-negro-iboom.png";
 // Schema for validation
 const paymentSchema = z.object({
   nombre: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
   apellido: z.string().min(2, "El apellido debe tener al menos 2 caracteres"),
   email: z.string().email("Debe ser un correo válido"),
-  direccion: z.string().min(5, "La dirección debe tener al menos 5 caracteres").optional(),
+  direccion: z
+    .string()
+    .min(5, "La dirección debe tener al menos 5 caracteres")
+    .optional(),
   ciudad: z.string().min(2, "Debe especificar una ciudad").optional(),
-  codigo_postal: z.string().min(2, "Debe especificar una codigo postal").optional(),
+  codigo_postal: z
+    .string()
+    .min(2, "Debe especificar una codigo postal")
+    .optional(),
   apartamento_opcional: z.string().optional(),
   provincia: z.string().min(2, "Debe especificar una provincia").optional(),
-  telefono: z.string().min(10, "El teléfono debe tener al menos 10 caracteres").optional(),
+  telefono: z
+    .string()
+    .min(10, "El teléfono debe tener al menos 10 caracteres")
+    .optional(),
   dni: z.string().min(2, "Debe especificar una dni").optional(),
   envio: z.enum(["domicilio", "retiro"]).default("domicilio"),
   metodoPago: z.enum(["mercadopago", "transferencia"]),
-})
+});
 
-type FormData = z.infer<typeof paymentSchema>
+type FormData = z.infer<typeof paymentSchema>;
 
 export default function CheckoutPage() {
-  const [envio, setEnvio] = useState("domicilio")
-  const [selectedMethod, setSelectedMethod] = useState("")
-  const { carrito } = useCarritoStore()
+  const [envio, setEnvio] = useState("domicilio");
+  const [selectedMethod, setSelectedMethod] = useState("");
+  const { carrito } = useCarritoStore();
 
-  const total = carrito.reduce((acc, producto) => acc + producto.price * producto.quantity, 0)
+  const total = carrito.reduce(
+    (acc, producto) => acc + producto.price * producto.quantity,
+    0
+  );
 
   const {
     register,
@@ -55,15 +67,15 @@ export default function CheckoutPage() {
     defaultValues: {
       envio: "domicilio",
     },
-  })
+  });
 
   const onSubmit = async (data: FormData) => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL
-    console.log("Form data:", data)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    console.log("Form data:", data);
 
     if (carrito.length === 0) {
-      alert("Tu carrito está vacío. Agrega productos para continuar.")
-      return
+      alert("Tu carrito está vacío. Agrega productos para continuar.");
+      return;
     }
 
     try {
@@ -75,20 +87,20 @@ export default function CheckoutPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...data, carrito: carrito }),
-        },
-      )
+        }
+      );
 
-      const result = await response.json()
+      const result = await response.json();
 
-      if (!response.ok) throw new Error(result.error)
+      if (!response.ok) throw new Error(result.error);
 
       // Redirect to payment gateway
-      window.location.href = result.init_point
+      window.location.href = result.init_point;
     } catch (error) {
-      console.error("Error al procesar el pago:", error)
-      alert("Error al procesar el pago. Intenta de nuevo.")
+      console.error("Error al procesar el pago:", error);
+      alert("Error al procesar el pago. Intenta de nuevo.");
     }
-  }
+  };
 
   return (
     <>
@@ -119,11 +131,16 @@ export default function CheckoutPage() {
               </div>
               <div className="max-h-[40vh]">
                 {carrito.length === 0 ? (
-                  <p className="text-muted-foreground">Tu carrito está vacío.</p>
+                  <p className="text-muted-foreground">
+                    Tu carrito está vacío.
+                  </p>
                 ) : (
                   <ul className="space-y-4">
                     {carrito.map((producto) => (
-                      <li key={producto._id} className="flex flex-col border-b pb-4">
+                      <li
+                        key={producto._id}
+                        className="flex flex-col border-b pb-4"
+                      >
                         <div className="flex justify-between">
                           <span className="font-medium">
                             {producto.model} - {producto.memory}GB
@@ -166,8 +183,17 @@ export default function CheckoutPage() {
                   <CardTitle className="text-xl">Contacto</CardTitle>
                 </div>
                 <div>
-                  <Input type="email" placeholder="Email" {...register("email")} className="w-full p-4" />
-                  {errors.email && <p className="text-destructive text-sm mt-1">{errors.email.message}</p>}
+                  <Input
+                    type="email"
+                    placeholder="Email"
+                    {...register("email")}
+                    className="w-full py-6"
+                  />
+                  {errors.email && (
+                    <p className="text-destructive text-sm mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -182,7 +208,7 @@ export default function CheckoutPage() {
                   value={envio}
                   onValueChange={(value) => {
                     if (value) {
-                      setEnvio(value)
+                      setEnvio(value);
                     }
                   }}
                   className="flex w-full justify-between border"
@@ -205,7 +231,9 @@ export default function CheckoutPage() {
 
                 <div className="pt-8">
                   <div className="">
-                    <CardTitle className="text-xl pb-4">Dirección de entrega</CardTitle>
+                    <CardTitle className="text-xl pb-4">
+                      Dirección de entrega
+                    </CardTitle>
                   </div>
 
                   {envio === "domicilio" ? (
@@ -213,8 +241,17 @@ export default function CheckoutPage() {
                       <div className="space-y-4">
                         <div className="flex flex-col md:flex-row gap-4">
                           <div className="w-full">
-                            <Input type="text" placeholder="Nombre" {...register("nombre")} className="w-full py-6" />
-                            {errors.nombre && <p className="text-destructive text-sm mt-1">{errors.nombre.message}</p>}
+                            <Input
+                              type="text"
+                              placeholder="Nombre"
+                              {...register("nombre")}
+                              className="w-full py-6"
+                            />
+                            {errors.nombre && (
+                              <p className="text-destructive text-sm mt-1">
+                                {errors.nombre.message}
+                              </p>
+                            )}
                           </div>
                           <div className="w-full">
                             <Input
@@ -224,20 +261,38 @@ export default function CheckoutPage() {
                               className="w-full py-6"
                             />
                             {errors.apellido && (
-                              <p className="text-destructive text-sm mt-1">{errors.apellido.message}</p>
+                              <p className="text-destructive text-sm mt-1">
+                                {errors.apellido.message}
+                              </p>
                             )}
                           </div>
                         </div>
 
                         <div>
-                          <Input type="text" placeholder="DNI" {...register("dni")} className="w-full py-6" />
-                          {errors.dni && <p className="text-destructive text-sm mt-1">{errors.dni.message}</p>}
+                          <Input
+                            type="text"
+                            placeholder="DNI"
+                            {...register("dni")}
+                            className="w-full py-6"
+                          />
+                          {errors.dni && (
+                            <p className="text-destructive text-sm mt-1">
+                              {errors.dni.message}
+                            </p>
+                          )}
                         </div>
 
                         <div>
-                          <Input type="text" placeholder="Teléfono" {...register("telefono")} className="w-full py-6" />
+                          <Input
+                            type="text"
+                            placeholder="Teléfono"
+                            {...register("telefono")}
+                            className="w-full py-6"
+                          />
                           {errors.telefono && (
-                            <p className="text-destructive text-sm mt-1">{errors.telefono.message}</p>
+                            <p className="text-destructive text-sm mt-1">
+                              {errors.telefono.message}
+                            </p>
                           )}
                         </div>
 
@@ -249,7 +304,9 @@ export default function CheckoutPage() {
                             className="w-full py-6"
                           />
                           {errors.direccion && (
-                            <p className="text-destructive text-sm mt-1">{errors.direccion.message}</p>
+                            <p className="text-destructive text-sm mt-1">
+                              {errors.direccion.message}
+                            </p>
                           )}
                         </div>
 
@@ -271,13 +328,24 @@ export default function CheckoutPage() {
                               className="w-full py-6"
                             />
                             {errors.codigo_postal && (
-                              <p className="text-destructive text-sm mt-1">{errors.codigo_postal.message}</p>
+                              <p className="text-destructive text-sm mt-1">
+                                {errors.codigo_postal.message}
+                              </p>
                             )}
                           </div>
 
                           <div className="w-full">
-                            <Input type="text" placeholder="Ciudad" {...register("ciudad")} className="w-full py-6" />
-                            {errors.ciudad && <p className="text-destructive text-sm mt-1">{errors.ciudad.message}</p>}
+                            <Input
+                              type="text"
+                              placeholder="Ciudad"
+                              {...register("ciudad")}
+                              className="w-full py-6"
+                            />
+                            {errors.ciudad && (
+                              <p className="text-destructive text-sm mt-1">
+                                {errors.ciudad.message}
+                              </p>
+                            )}
                           </div>
 
                           <div className="w-full">
@@ -288,7 +356,9 @@ export default function CheckoutPage() {
                               className="w-full py-6"
                             />
                             {errors.provincia && (
-                              <p className="text-destructive text-sm mt-1">{errors.provincia.message}</p>
+                              <p className="text-destructive text-sm mt-1">
+                                {errors.provincia.message}
+                              </p>
                             )}
                           </div>
                         </div>
@@ -300,12 +370,16 @@ export default function CheckoutPage() {
 
                       <div className="mb-2">
                         <h2>Dirección:</h2>
-                        <h2 className="text-[0.9rem] text-muted-foreground">Calle Ficticia 123, Ciudad, País</h2>
+                        <h2 className="text-[0.9rem] text-muted-foreground">
+                          Calle Ficticia 123, Ciudad, País
+                        </h2>
                       </div>
 
                       <div className="mb-2">
                         <h2>Horario:</h2>
-                        <h2 className="text-[0.9rem] text-muted-foreground">Lunes a Viernes: 9:00 AM - 6:00 PM</h2>
+                        <h2 className="text-[0.9rem] text-muted-foreground">
+                          Lunes a Viernes: 9:00 AM - 6:00 PM
+                        </h2>
                       </div>
                     </div>
                   )}
@@ -317,10 +391,19 @@ export default function CheckoutPage() {
                 <h2 className="text-xl font-semibold mb-4">Método de Pago</h2>
                 <Card className="w-full rounded-lg">
                   <CardContent className="p-4">
-                    <Label className="block text-sm text-muted-foreground">Selecciona un método de pago</Label>
-                    <RadioGroup value={selectedMethod} onValueChange={setSelectedMethod} className="space-y-2 py-4">
+                    <Label className="block text-sm text-muted-foreground">
+                      Selecciona un método de pago
+                    </Label>
+                    <RadioGroup
+                      value={selectedMethod}
+                      onValueChange={setSelectedMethod}
+                      className="space-y-2 py-4"
+                    >
                       <Label className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer hover:bg-accent">
-                        <RadioGroupItem value="mercadopago" {...register("metodoPago")} />
+                        <RadioGroupItem
+                          value="mercadopago"
+                          {...register("metodoPago")}
+                        />
                         <span className="font-medium">Mercado Pago</span>
                       </Label>
 
@@ -328,24 +411,30 @@ export default function CheckoutPage() {
                         <div className="p-4 border rounded-lg mx-auto w-full bg-muted h-auto">
                           <div>
                             <h2 className="text-[0.9rem]">
-                              Después de hacer clic en Pagar, serás redirigido a Mercado Pago para completar tu compra
-                              de forma segura.
+                              Después de hacer clic en Pagar, serás redirigido a
+                              Mercado Pago para completar tu compra de forma
+                              segura.
                             </h2>
                           </div>
                         </div>
                       )}
 
                       <Label className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer hover:bg-accent">
-                        <RadioGroupItem value="transferencia" {...register("metodoPago")} />
-                        <span className="font-medium">Transferencia Bancaria</span>
+                        <RadioGroupItem
+                          value="transferencia"
+                          {...register("metodoPago")}
+                        />
+                        <span className="font-medium">
+                          Transferencia Bancaria
+                        </span>
                       </Label>
 
                       {selectedMethod === "transferencia" && (
                         <div className="p-4 border rounded-lg mx-auto w-full bg-muted h-auto">
                           <div>
                             <h2 className="text-[0.9rem]">
-                              Seguir las instrucciones de pago. Al finalizar tu pedido te vamos a contactar por
-                              WhatsApp.
+                              Seguir las instrucciones de pago. Al finalizar tu
+                              pedido te vamos a contactar por WhatsApp.
                             </h2>
                           </div>
                         </div>
@@ -353,8 +442,8 @@ export default function CheckoutPage() {
                     </RadioGroup>
 
                     <p className="text-xs text-muted-foreground flex items-center mt-2">
-                      <ShieldCheck className="w-4 h-4 mr-1 text-green-500" /> Todas las transacciones son seguras y
-                      están encriptadas.
+                      <ShieldCheck className="w-4 h-4 mr-1 text-green-500" />{" "}
+                      Todas las transacciones son seguras y están encriptadas.
                     </p>
                   </CardContent>
                 </Card>
@@ -362,7 +451,11 @@ export default function CheckoutPage() {
 
               {/* Payment Button - Now at the very end, no special positioning */}
               <div className="mt-8 pb-4">
-                <Button type="submit" className="w-full h-12" disabled={!selectedMethod}>
+                <Button
+                  type="submit"
+                  className="w-full h-12"
+                  disabled={!selectedMethod}
+                >
                   Pagar ${total.toFixed(2)}
                 </Button>
               </div>
@@ -371,6 +464,5 @@ export default function CheckoutPage() {
         </div>
       </div>
     </>
-  )
+  );
 }
-

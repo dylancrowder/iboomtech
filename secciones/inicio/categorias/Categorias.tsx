@@ -4,11 +4,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import styles from "./categorias.module.css";
-import img_iphone from "../../../assets/imagenes/inicio/iphone-blanca.jpg";
-import img_android from "../../../assets/imagenes/inicio/android-blanca.jpg";
+import img_iphone from "../../../assets/imagenes/inicio/ipne.jpg";
 import img_airpod from "../../../assets/imagenes/inicio/airpods_blanco.jpg";
-import img_mac from "../../../assets/imagenes/inicio/mcoro.jpg";
-
+import img_androidd from "../../../assets/imagenes/inicio/andri.jpg";
+import img_ipad from "../../../assets/imagenes/inicio/ip.jpg";
+import Link from "next/link";
 const Categorias = () => {
   const { ref, inView } = useInView({
     triggerOnce: true, // Cambié esto a `false` para que las animaciones se repitan si se sale de la vista
@@ -37,14 +37,16 @@ const Categorias = () => {
                 delay: 0.0, // Retraso para el primer artículo
               }}
             >
-              <div className={styles.cnt_img}>
-                <Image
-                  src={img_iphone}
-                  alt="iPhone"
-                  className={`${styles.imagen_iphone} ${styles.imagen_general}`}
-                  quality={100}
-                />
-              </div>
+              <Link href="/productos/iphone">
+                <div className={styles.cnt_img}>
+                  <Image
+                    src={img_iphone}
+                    alt="iPhone"
+                    className={`${styles.imagen_iphone} ${styles.imagen_general}`}
+                    quality={100}
+                  />
+                </div>
+              </Link>
               <div className={styles.title_cnt}>
                 <h2 className={styles.title_card}>iPhones</h2>
                 <p className={styles.subtitle_card}>Nuevos y usados</p>
@@ -61,14 +63,16 @@ const Categorias = () => {
                 delay: 0.3, // Retraso para el segundo artículo
               }}
             >
-              <div>
-                <Image
-                  src={img_android}
-                  alt="Android"
-                  className={`${styles.imagen_android} ${styles.imagen_general}`}
-                  quality={100}
-                />{" "}
-              </div>
+              <Link href={"/productos/andorid"}>
+                <div>
+                  <Image
+                    src={img_androidd}
+                    alt="Android"
+                    className={`${styles.imagen_android} ${styles.imagen_general}`}
+                    quality={100}
+                  />
+                </div>
+              </Link>
               <div className={styles.title_cnt}>
                 <h2 className={styles.title_card}>Android</h2>
                 <p className={styles.subtitle_card}>
@@ -87,19 +91,19 @@ const Categorias = () => {
                 delay: 0.6, // Retraso para el último artículo
               }}
             >
-              <div>
-                <Image
-                  src={img_mac}
-                  alt="macbook"
-                  className={`${styles.imagen_airpod} ${styles.imagen_general}`}
-                  quality={100}
-                />
-              </div>
+              <Link href="/productos/ipad">
+                <div>
+                  <Image
+                    src={img_ipad}
+                    alt="ipad"
+                    className={`${styles.imagen_mac} ${styles.imagen_general}`}
+                    quality={100}
+                  />
+                </div>
+              </Link>
               <div className={styles.title_cnt}>
-                <h2 className={styles.title_card}>MacBooks</h2>
-                <p className={styles.subtitle_card}>
-                  MackbooKs nuevas y usadas
-                </p>
+                <h2 className={styles.title_card}>iPads</h2>
+                <p className={styles.subtitle_card}>iPads nuevas y usadas</p>
               </div>
             </motion.article>
             <motion.article
@@ -112,15 +116,16 @@ const Categorias = () => {
                 delay: 0.6, // Retraso para el último artículo
               }}
             >
-              <div>
-                <Image
-                  src={img_airpod}
-                  alt="AirPods y Accesorios"
-                  className={`${styles.imagen_airpod} ${styles.imagen_general}`}
-                  quality={100}
-                />
-              </div>
-
+              <Link href="/productos/accesorios">
+                <div>
+                  <Image
+                    src={img_airpod}
+                    alt="AirPods y Accesorios"
+                    className={`${styles.imagen_airpod} ${styles.imagen_general}`}
+                    quality={100}
+                  />
+                </div>
+              </Link>
               <div className={styles.title_cnt}>
                 <h2 className={styles.title_card}>AirPods y Accesorios</h2>
                 <p className={styles.subtitle_card}>

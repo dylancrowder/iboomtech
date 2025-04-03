@@ -112,12 +112,12 @@ export default function CheckoutPage() {
       <div className="flex w-full justify-center items-center">
         <div className="flex flex-col md:flex-row justify-center w-[90%] gap-6">
           {/* Order Summary - Now first on mobile but not overlapping */}
-          <div className="w-full md:w-1/2 md:order-2 border-b pb-4 mb-4 md:border-b-0 md:border-l md:pb-0 md:mb-0 bg-muted p-4 md:p-8 md:sticky md:top-0">
+          <div className="w-full md:w-1/2 md:order-2 border-b pb-4 mb-4 md:border-b-0 md:border-l md:pb-0 md:mb-0 bg-muted p-4 md:p-8 ">
             <div className="w-full">
               <div className="mb-6">
                 <CardTitle className="text-xl">Resumen del Pedido</CardTitle>
               </div>
-              <div className="max-h-[40vh] overflow-y-auto">
+              <div className="max-h-[40vh]">
                 {carrito.length === 0 ? (
                   <p className="text-muted-foreground">Tu carrito está vacío.</p>
                 ) : (
@@ -159,7 +159,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Contact and Shipping Form - Now second on mobile */}
-          <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-1/2 md:order-1 relative">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-full ">
             <div className="w-full bg-background p-4 md:p-8 rounded-lg">
               <div className="pb-12">
                 <div className="pb-4">

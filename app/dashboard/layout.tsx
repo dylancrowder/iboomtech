@@ -11,7 +11,6 @@ import {
   ShipIcon as LocalShipping,
   Package,
   PlusCircle,
-  ArrowLeft,
   ShoppingCart,
   Home,
 } from "lucide-react";
@@ -37,6 +36,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
+
 import useAuthStore from "@/zustand/useAuthStore";
 
 export default function DashboardLayout({
@@ -48,7 +48,7 @@ export default function DashboardLayout({
   const [isStockOpen, setIsStockOpen] = useState(false);
   const [activeItem, setActiveItem] = useState<string | null>(null);
   const [activeItemStock, setActiveItemStock] = useState<string | null>(null);
-
+  const [loading, setLoading] = useState(true);
   const inventoryItems = [
     { label: "iPhone", path: "/dashboard/editar/iphone" },
     { label: "iPad", path: "/dashboard/editar/ipad" },
@@ -56,16 +56,17 @@ export default function DashboardLayout({
     { label: "Android", path: "/dashboard/editar/android" },
     { label: "Accesorios", path: "/dashboard/editar/accesorios" },
   ];
-
+  const { isAuthenticated } = useAuthStore();
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.replace("/login");
+    } else {
+      setLoading(false);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     const matchingInventoryItem = inventoryItems.find(
@@ -89,8 +90,7 @@ export default function DashboardLayout({
     }
   }, [pathname]);
 
-  if (!isAuthenticated) return null;
-
+  if (loading) return null;
   return (
     <SidebarProvider>
       <div className="flex h-screen w-full overflow-hidden bg-background">
@@ -110,15 +110,6 @@ export default function DashboardLayout({
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  <SidebarMenuItem>
-                    <SidebarMenuButton asChild className="hover:text-primary">
-                      <Link href="/" className="flex items-center gap-2">
-                        <ArrowLeft className="h-4 w-4" />
-                        <span>Volver al inicio</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild className="hover:text-primary">
                       <Link
@@ -252,9 +243,7 @@ export default function DashboardLayout({
                             <SidebarMenuButton
                               asChild
                               size="sm"
-                              isActive={
-                                activeItemStock === item.path
-                              }
+                              isActive={activeItemStock === item.path}
                             >
                               <Link
                                 href={`/dashboard/agregarstock${item.path.replace(

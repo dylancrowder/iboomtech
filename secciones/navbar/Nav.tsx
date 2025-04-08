@@ -63,11 +63,11 @@ const products = [
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); // Obtener la ruta actual
-  const { isAuthenticated } = useAuthStore();
-  // Si la ruta comienza con "/dashboard", no se renderiza el Footer
+  const pathname = usePathname();
+  const { isAuthenticated } = useAuthStore(); // <- Estado global
+
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/checkout")) {
-    return null; // No renderizar el Footer
+    return null;
   }
 
   return (
@@ -120,7 +120,7 @@ const Nav = () => {
               </Button>
             </NavigationMenuItem>
 
-            {/* Show Dashboard link only if authenticated */}
+            {/* Solo mostrar si está autenticado */}
             {isAuthenticated && (
               <NavigationMenuItem>
                 <Button variant="ghost" asChild className="px-4">
@@ -132,7 +132,7 @@ const Nav = () => {
         </NavigationMenu>
       </div>
 
-      {/* Right side items */}
+      {/* Right side */}
       <div className="flex items-center gap-1 md:gap-2">
         <div className="hidden sm:block ">
           <UserMenu />
@@ -141,8 +141,7 @@ const Nav = () => {
           <CartMenu />
         </div>
 
-        {/* Mobile menu button */}
-        {/* Mobile menu button */}
+        {/* Mobile menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -151,12 +150,10 @@ const Nav = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[85vw] sm:w-[400px] p-0">
-            {/* Mobile Menu Header */}
             <SheetHeader className="p-4 border-b">
               <SheetTitle className="text-left">Menú</SheetTitle>
             </SheetHeader>
 
-            {/* User and Cart in mobile */}
             <div className="flex justify-between items-center p-4 bg-muted/30">
               <div className="sm:hidden flex gap-2 w-full justify-between">
                 <UserMenu />
@@ -164,7 +161,6 @@ const Nav = () => {
               </div>
             </div>
 
-            {/* Main Navigation Links */}
             <div className="p-4">
               <Link
                 href="/"
@@ -184,7 +180,7 @@ const Nav = () => {
                 <span>Contacto</span>
               </Link>
 
-              {/* Show Dashboard link only if authenticated in mobile menu */}
+              {/* Solo mostrar si está autenticado */}
               {isAuthenticated && (
                 <Link
                   href="/dashboard"
@@ -199,7 +195,7 @@ const Nav = () => {
 
             <Separator />
 
-            {/* Categories Section */}
+            {/* Categorías */}
             <div className="p-4">
               <h3 className="font-medium text-sm text-muted-foreground mb-2 px-4">
                 CATEGORÍAS

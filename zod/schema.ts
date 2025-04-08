@@ -31,25 +31,28 @@ export const validModels = [
 
 // Colores válidos
 export const validColors = [
-  "Coral",
-  "Negro",
-  "Blanco",
-  "Gris espacial",
   "Plata",
-  "Oro",
-  "Medianoche",
-  "Luz estelar",
+  "Gris espacial",
   "Azul",
-  "Rosa",
-  "Verde",
-  "Rojo",
+  "Blanco",
   "Amarillo",
+  "Coral",
+  "Rojo",
+  "Negro",
+  "Verde",
   "Morado",
-  "Verde Noche",
-  "Azul Pacífico",
+  "Oro",
   "Grafito",
-  "Titanio Desierto",
+  "Azul Pacífico",
+  "Rosa",
+  "Azul Sierra",
+  "Verde Alpino",
+  "Verde Noche",
+  "Luz estelar",
+  "Medianoche",
   "Titanio",
+  "Titanio Desierto",
+  "Pink", // iPhone 15 y 15 Plus
 ] as const;
 
 export const memories = [16, 32, 64, 128, 256, 512, 1024] as const;

@@ -27,12 +27,109 @@ import { Checkbox } from "@/components/ui/checkbox";
 //Zod
 import {
   conditions,
-  memories,
   ProductFormValues,
   productSchema,
-  validColors,
   validModels,
 } from "@/zod/schema";
+
+const iphoneOptions = {
+  "iPhone X": {
+    colors: ["Gris espacial", "Plata"],
+    memories: [64, 256],
+  },
+  "iPhone XR": {
+    colors: ["Azul", "Blanco", "Amarillo", "Coral", "Negro", "Rojo"],
+    memories: [64, 128, 256],
+  },
+  "iPhone 11": {
+    colors: ["Rojo", "Amarillo", "Blanco", "Verde", "Morado", "Negro"],
+    memories: [64, 128, 256],
+  },
+  "iPhone 11 Pro": {
+    colors: ["Gris espacial", "Oro", "Plata", "Verde Noche"],
+    memories: [64, 256, 512],
+  },
+  "iPhone 11 Pro Max": {
+    colors: ["Gris espacial", "Oro", "Plata", "Verde Noche"],
+    memories: [64, 256, 512],
+  },
+  "iPhone 12": {
+    colors: ["Azul", "Rojo", "Blanco", "Negro", "Verde", "Morado"],
+    memories: [64, 128, 256],
+  },
+  "iPhone 12 Mini": {
+    colors: ["Azul", "Rojo", "Blanco", "Negro", "Verde", "Morado"],
+    memories: [64, 128, 256],
+  },
+  "iPhone 12 Pro": {
+    colors: ["Grafito", "Oro", "Plata", "Azul Pacífico"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 12 Pro Max": {
+    colors: ["Grafito", "Oro", "Plata", "Azul Pacífico"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 13": {
+    colors: ["Rojo", "Azul", "Blanco", "Negro", "Verde", "Rosa"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 13 Mini": {
+    colors: ["Rojo", "Azul", "Blanco", "Negro", "Verde", "Rosa"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 13 Pro": {
+    colors: ["Grafito", "Plata", "Oro", "Azul Sierra", "Verde Alpino"],
+    memories: [128, 256, 512, 1024],
+  },
+  "iPhone 13 Pro Max": {
+    colors: ["Grafito", "Plata", "Oro", "Azul Sierra", "Verde Alpino"],
+    memories: [128, 256, 512, 1024],
+  },
+  "iPhone 14": {
+    colors: ["Azul", "Rojo", "Negro", "Blanco", "Morado"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 14 Plus": {
+    colors: ["Azul", "Rojo", "Negro", "Blanco", "Morado"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 14 Pro": {
+    colors: ["Negro", "Plata", "Oro", "Morado"],
+    memories: [128, 256, 512, 1024],
+  },
+  "iPhone 14 Pro Max": {
+    colors: ["Negro", "Plata", "Oro", "Morado"],
+    memories: [128, 256, 512, 1024],
+  },
+  "iPhone 15": {
+    colors: ["Amarillo", "Verde", "Azul", "Pink", "Negro"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 15 Plus": {
+    colors: ["Amarillo", "Verde", "Azul", "Pink", "Negro"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 15 Pro": {
+    colors: ["Negro", "Blanco", "Oro", "Azul"],
+    memories: [128, 256, 512, 1024],
+  },
+  "iPhone 15 Pro Max": {
+    colors: ["Negro", "Blanco", "Oro", "Azul"],
+    memories: [256, 512, 1024],
+  },
+  "iPhone 16": {
+    colors: ["Azul", "Verde", "Rosa", "Blanco", "Negro"],
+    memories: [128, 256, 512],
+  },
+  "iPhone 16 Pro": {
+    colors: ["Negro", "Blanco", "Titanio", "Titanio Desierto"],
+    memories: [256, 512, 1024, 2048],
+  },
+  "iPhone 16e": {
+    colors: ["Blanco", "Negro"],
+    memories: [64, 128],
+  },
+};
 
 export default function ProductForm() {
   const form = useForm<ProductFormValues>({
@@ -50,6 +147,11 @@ export default function ProductForm() {
       enabled: true,
     },
   });
+  const selectedModel = form.watch("model");
+  const modelOptions =
+    iphoneOptions[selectedModel as keyof typeof iphoneOptions];
+  const availableColors = modelOptions?.colors ?? [];
+  const availableMemories = modelOptions?.memories ?? [];
 
   async function onSubmit(data: ProductFormValues) {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -200,7 +302,7 @@ export default function ProductForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {validColors.map((color) => (
+                    {availableColors.map((color) => (
                       <SelectItem key={color} value={color}>
                         {color}
                       </SelectItem>
@@ -247,7 +349,7 @@ export default function ProductForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {memories.map((size) => (
+                    {availableMemories.map((size) => (
                       <SelectItem key={size} value={size.toString()}>
                         {size} GB
                       </SelectItem>

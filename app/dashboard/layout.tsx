@@ -38,6 +38,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 import useAuthStore from "@/zustand/useAuthStore";
+import { useSessionCheck } from "@/hooks/Verify";
 
 export default function DashboardLayout({
   children,
@@ -59,12 +60,14 @@ export default function DashboardLayout({
   const { isAuthenticated } = useAuthStore();
   const pathname = usePathname();
   const router = useRouter();
+  useSessionCheck();
 
   useEffect(() => {
     if (!isAuthenticated) {
       router.replace("/login");
     } else {
       setLoading(false);
+      router.replace(pathname);
     }
   }, [isAuthenticated]);
 

@@ -7,6 +7,8 @@ export const useSessionCheck = () => {
   const { setAuthenticated, logout } = useAuthStore();
 
   useEffect(() => {
+    console.log("entros");
+    
     const checkAuth = async () => {
       try {
         const res = await fetch(

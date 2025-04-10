@@ -34,6 +34,9 @@ const Login = () => {
       if (!response.ok) {
         throw new Error("Login failed");
       }
+      const data = await response.json();
+
+      console.log("esta es la data ", data);
 
       setAuthenticated(true);
       window.location.href = "/";

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 import { useEffect } from "react";
 import useAuthStore from "@/zustand/useAuthStore";
@@ -21,7 +21,7 @@ export const useSessionCheck = () => {
 
         const data = await res.json();
 
-        console.log("esta es la data ", data);
+        console.log("esta es la data  en veryfy", data);
         if (res.ok) {
           setAuthenticated(true);
         } else {

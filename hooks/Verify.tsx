@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-"use client"
+"use client";
 import { useEffect } from "react";
 import useAuthStore from "@/zustand/useAuthStore";
 
@@ -8,7 +8,7 @@ export const useSessionCheck = () => {
 
   useEffect(() => {
     console.log("entros");
-    
+
     const checkAuth = async () => {
       try {
         const res = await fetch(
@@ -19,12 +19,16 @@ export const useSessionCheck = () => {
           }
         );
 
+        const data = await res.json();
+
+        console.log("esta es la data ", data);
         if (res.ok) {
           setAuthenticated(true);
         } else {
           logout();
         }
       } catch (err) {
+        console.log("este es el error ", err);
         logout();
       }
     };

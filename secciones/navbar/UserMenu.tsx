@@ -15,18 +15,18 @@ import useAuthStore from "@/zustand/useAuthStore";
 
 export default function UserMenu() {
   // Este es el estado que controla la visibilidad del drawer
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const { isAuthenticated, logout } = useAuthStore(); // Suponiendo que tienes un método 'logout' en tu store
 
   // Función para cerrar el drawer
   const handleLoginClick = () => {
     setIsDrawerOpen(false); // Cierra el drawer al hacer clic en "Iniciar sesión"
   };
-
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const cerrar = async () => {
     try {
       // Aquí se hace el fetch al backend para cerrar sesión
-      const response = await fetch("http://localhost:8085/auth/logout", {
+      const response = await fetch(`${apiUrl}/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

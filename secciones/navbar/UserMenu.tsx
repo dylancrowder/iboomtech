@@ -35,8 +35,9 @@ export default function UserMenu() {
       });
 
       if (response.ok) {
-        // Si la respuesta es exitosa, limpiar el estado de autenticación
-        logout(); // Suponiendo que tienes una función logout en tu store de Zustand
+        localStorage.removeItem("token");
+        logout(); 
+
         console.log("Sesión cerrada");
       } else {
         console.error("Error al cerrar sesión");

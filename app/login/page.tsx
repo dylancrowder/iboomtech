@@ -37,7 +37,7 @@ const Login = () => {
       const data = await response.json();
 
       console.log("esta es la data ", data);
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", data.accessToken);
       setAuthenticated(true);
       window.location.href = "/";
     } catch (error: any) {

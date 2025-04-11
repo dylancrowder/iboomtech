@@ -61,7 +61,9 @@ export default function ProductosPage() {
         }
 
         const response = await fetch(
-          `http://localhost:8085/dashboard/get-all?${filters.toString()}`
+          `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/dashboard/get-all?${filters.toString()}`
         );
         if (!response.ok) {
           throw new Error("Error al obtener los iPhones");

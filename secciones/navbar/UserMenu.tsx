@@ -2,7 +2,7 @@
 
 import { LogIn, LogOut, Package, User, UserCircle } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -21,7 +21,7 @@ export default function UserMenu() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   // Close dropdown when navigating
-  useEffect(() => {
+/*   useEffect(() => {
     const handleRouteChange = () => {
       setIsOpen(false)
     }
@@ -29,7 +29,7 @@ export default function UserMenu() {
     return () => {
 
     }
-  }, [])
+  }, []) */
 
   const handleLogout = async () => {
     try {

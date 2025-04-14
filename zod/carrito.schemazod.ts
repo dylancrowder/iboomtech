@@ -11,6 +11,7 @@ export const productoSchema = z.object({
   batteryStatus: z.number(),
   memory: z.number(),
   enabled: z.boolean(),
+  category: z.string(),
 });
 
 // Schema del carrito

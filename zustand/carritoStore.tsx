@@ -11,6 +11,7 @@ interface Producto {
   batteryStatus: number;
   memory: number;
   enabled: boolean;
+  category: string;
 }
 
 // Definir el estado del carrito

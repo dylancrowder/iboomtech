@@ -242,8 +242,6 @@ export default function ProductDetails() {
                     return;
                   }
 
-                  console.log("cccccccccccccccccccccccccccccc",parsed.data);
-                  
                   agregarAlCarrito(parsed.data);
                   toast.success(`${product.model} añadido al carrito`, {});
                 }

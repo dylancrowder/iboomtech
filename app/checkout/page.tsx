@@ -54,6 +54,7 @@ export default function CheckoutPage() {
   const [envio, setEnvio] = useState("domicilio");
   const [selectedMethod, setSelectedMethod] = useState("");
   const { carrito } = useCarritoStore();
+  console.log("este es el carrito ", carrito);
 
   const total = carrito.reduce(
     (acc, producto) => acc + producto.price * producto.quantity,

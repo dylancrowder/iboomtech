@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckCircle } from "lucide-react";
+
+import { CheckCircle} from "lucide-react";
 
 interface Envio {
   _id: string;
@@ -63,15 +64,16 @@ const EnviosPendientes = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto mt-6 p-4">
-      <h2 className="text-2xl font-bold mb-4">Envíos Pendientes</h2>
+    <div className=" mx-auto mt-6 p-4">
+      <h2 className="text-4xl font-bold ">Envíos</h2>
+
       {loading ? (
         <Skeleton className="h-20 w-full rounded-lg" />
       ) : (
-        <ScrollArea className="h-[400px] w-full border rounded-lg p-2">
+        <div className="flex items-center justify-center">
           {envios.length > 0 ? (
             envios.map((envio) => (
-              <Card key={envio._id} className="mb-4">
+              <Card key={envio._id} className="mb-4 w-[50%]">
                 <CardContent className="p-4">
                   <h3 className="text-lg font-semibold">{envio.nombre}</h3>
                   <p className="text-sm text-muted-foreground">
@@ -91,7 +93,8 @@ const EnviosPendientes = () => {
                     {new Date(envio.createdAt).toLocaleString()}
                   </p>
                   <Button
-                    className="mt-3 flex items-center gap-2"
+                    className="mt-3 flex items-center gap-2 cursor-pointer
+"
                     onClick={() => handleEnviar(envio._id)}
                   >
                     <CheckCircle className="w-4 h-4" /> Enviado
@@ -104,7 +107,7 @@ const EnviosPendientes = () => {
               No hay envíos pendientes.
             </p>
           )}
-        </ScrollArea>
+        </div>
       )}
     </div>
   );

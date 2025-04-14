@@ -31,6 +31,7 @@ interface Product {
 }
 
 import { useImageForProduct } from "@/hooks/imagenes";
+import { productoSchema } from "@/zod/carrito.schemazod";
 
 export default function ProductDetails() {
   const [product, setProduct] = useState<Product | null>(null);
@@ -230,7 +231,20 @@ export default function ProductDetails() {
               size="lg"
               onClick={() => {
                 if (product) {
-                  agregarAlCarrito(product);
+                  const parsed = productoSchema.safeParse(product);
+
+                  if (!parsed.success) {
+                    toast.error("El producto no tiene un formato válido");
+                    console.error(
+                      "Errores de validación",
+                      parsed.error.format()
+                    );
+                    return;
+                  }
+
+                  console.log("cccccccccccccccccccccccccccccc",parsed.data);
+                  
+                  agregarAlCarrito(parsed.data);
                   toast.success(`${product.model} añadido al carrito`, {});
                 }
               }}

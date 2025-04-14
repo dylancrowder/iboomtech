@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-import { CheckCircle} from "lucide-react";
+import { CheckCircle } from "lucide-react";
 
 interface Envio {
   _id: string;
@@ -31,6 +31,8 @@ const EnviosPendientes = () => {
       const response = await fetch(`${apiUrl}/dashboard/envios`);
       if (!response.ok) throw new Error("Error al obtener envíos");
       const data: Envio[] = await response.json();
+      console.log("esta es la data del envio ", data);
+
       setEnvios(data);
     } catch (error) {
       console.error("Error:", error);

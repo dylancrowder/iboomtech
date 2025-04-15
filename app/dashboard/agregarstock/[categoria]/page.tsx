@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-//Requeridos
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-//Componentes Ui
+import { useEffect } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -24,7 +25,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-//Zod
+
 import {
   conditions,
   ProductFormValues,
@@ -136,25 +137,45 @@ export default function ProductForm() {
     resolver: zodResolver(productSchema),
     defaultValues: {
       model: undefined,
-      price: 0,
+      price: undefined,
       condition: undefined,
       quantity: 1,
       color: undefined,
-      batteryStatus: 100,
-      memory: 64,
+      batteryStatus: undefined,
+      memory: undefined,
       description: "",
       details: "",
       enabled: true,
     },
   });
+
   const selectedModel = form.watch("model");
-  const modelOptions =
+  const condition = form.watch("condition");
+  const isUsed = condition === "usado";
+  const isNew = condition === "nuevo";
+
+  useEffect(() => {
+    if (condition === "nuevo") {
+      form.setValue("batteryStatus", 100);
+    } else if (condition === "usado") {
+      form.setValue("batteryStatus", undefined);
+    }
+  }, [condition, form]);
+
+  useEffect(() => {
+    if (isUsed) {
+      form.setValue("quantity", 1);
+    }
+  }, [isUsed, form]);
+
+  const modelOptions: any =
     iphoneOptions[selectedModel as keyof typeof iphoneOptions];
   const availableColors = modelOptions?.colors ?? [];
   const availableMemories = modelOptions?.memories ?? [];
 
   async function onSubmit(data: ProductFormValues) {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    console.log("esta es la data quie se envia ", data);
 
     try {
       const response = await fetch(`${apiUrl}/dashboard/crear`, {
@@ -192,6 +213,7 @@ export default function ProductForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6  lg:py-8 w-[100%] lg:w-[50%]  m-6 "
         >
+          {/* Modelo */}
           <FormField
             control={form.control}
             name="model"
@@ -220,6 +242,7 @@ export default function ProductForm() {
             )}
           />
 
+          {/* Precio */}
           <FormField
             control={form.control}
             name="price"
@@ -228,9 +251,13 @@ export default function ProductForm() {
                 <FormLabel>Precio</FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="Seleccione un Precio"
                     type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    value={field.value === undefined ? "" : field.value}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      field.onChange(value === "" ? undefined : Number(value));
+                    }}
                     className="border-gray-700 w-[100%]"
                   />
                 </FormControl>
@@ -239,6 +266,7 @@ export default function ProductForm() {
             )}
           />
 
+          {/* Condición */}
           <FormField
             control={form.control}
             name="condition"
@@ -267,25 +295,69 @@ export default function ProductForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="quantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Cantidad</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    className="border-gray-700 w-[100%]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {/* Cantidad (solo si es nuevo) */}
+          {isNew && (
+            <FormField
+              control={form.control}
+              name="quantity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Cantidad</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      {...field}
+                      onChange={(e) => field.onChange(Number(e.target.value))}
+                      className="border-gray-700 w-[100%]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
+          {/* Estado de la batería (solo si es usado) */}
+
+          {isUsed && (
+            <FormField
+              control={form.control}
+              name="batteryStatus"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Estado de la batería (%)</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Seleccione el estado de la batería"
+                      type="number"
+                      value={field.value ?? ""}
+                      onChange={(e) =>
+                        field.onChange(
+                          e.target.value === ""
+                            ? undefined
+                            : Number(e.target.value)
+                        )
+                      }
+                      className="border-gray-700"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
+          {isNew && (
+            <FormField
+              control={form.control}
+              name="batteryStatus"
+              render={({ field }) => (
+                <input type="hidden" {...field} value={100} />
+              )}
+            />
+          )}
+
+          {/* Color */}
           <FormField
             control={form.control}
             name="color"
@@ -302,7 +374,7 @@ export default function ProductForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {availableColors.map((color) => (
+                    {availableColors.map((color: any) => (
                       <SelectItem key={color} value={color}>
                         {color}
                       </SelectItem>
@@ -314,25 +386,7 @@ export default function ProductForm() {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="batteryStatus"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Estado de la batería (%)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    className="border-gray-700"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
+          {/* Memoria */}
           <FormField
             control={form.control}
             name="memory"
@@ -340,7 +394,7 @@ export default function ProductForm() {
               <FormItem>
                 <FormLabel>Memoria (GB)</FormLabel>
                 <Select
-                  onValueChange={(value) => field.onChange(value)}
+                  onValueChange={(value) => field.onChange(Number(value))}
                   defaultValue={field.value?.toString()}
                 >
                   <FormControl className="border-gray-700 ">
@@ -349,7 +403,7 @@ export default function ProductForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {availableMemories.map((size) => (
+                    {availableMemories.map((size: any) => (
                       <SelectItem key={size} value={size.toString()}>
                         {size} GB
                       </SelectItem>
@@ -361,6 +415,7 @@ export default function ProductForm() {
             )}
           />
 
+          {/* Descripción */}
           <FormField
             control={form.control}
             name="description"
@@ -380,6 +435,7 @@ export default function ProductForm() {
             )}
           />
 
+          {/* Detalles */}
           <FormField
             control={form.control}
             name="details"
@@ -399,6 +455,7 @@ export default function ProductForm() {
             )}
           />
 
+          {/* Habilitado */}
           <FormField
             control={form.control}
             name="enabled"

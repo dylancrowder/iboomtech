@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -19,6 +19,25 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
+interface ProductoDetallado {
+  _id: string;
+  title: string;
+  price: number;
+  batteryStatus?: number;
+  memory?: number;
+  color?: string;
+  [key: string]: any;
+}
+
+interface ItemCarrito {
+  titulo: string;
+  precio: number;
+  category_id: string;
+  id: string;
+  cantidad: number;
+  _id: string;
+  detalles?: ProductoDetallado;
+}
 
 interface Envio {
   _id: string;
@@ -34,7 +53,7 @@ interface Envio {
   envio: string;
   tipo_de_envio: string;
   apartamento_opcional: string;
-  carrito: Array<{ titulo: string; precio: number }>;
+  carrito: ItemCarrito[];
   paymentId: string;
   status: string;
   createdAt: string;
@@ -45,49 +64,64 @@ const EnviosPendientes = () => {
   const [envios, setEnvios] = useState<Envio[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedEnvioId, setSelectedEnvioId] = useState<string | null>(null);
-
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  async function fetchEnvios() {
-    try {
-      const response = await fetch(`${apiUrl}/dashboard/envios`);
-      if (!response.ok) throw new Error("Error al obtener envíos");
-      const data: Envio[] = await response.json();
-      console.log("esta es la data del envio ", data);
-
-      setEnvios(data);
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
-    fetchEnvios();
-  }, []);
+    const fetchEnvios = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/dashboard/envios`);
+        if (!response.ok) throw new Error("Error al obtener envíos");
+        const data: Envio[] = await response.json();
 
-  async function handleEnviar(id: string) {
-    try {
-      const response = await fetch(
-        `http://localhost:8085/dashboard/envios/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
+        // Enriquecer el carrito con detalles de producto
+        const enviosConDetalles = await Promise.all(
+          data.map(async (envio) => {
+            const carritoConDetalles = await Promise.all(
+              envio.carrito.map(async (item) => {
+                try {
+                  const res = await fetch(
+                    `${apiUrl}/${item.category_id}/get-id/${item.id}`
+                  );
+                  if (!res.ok) throw new Error("Error al obtener producto");
+                  const detalles = await res.json();
+                  return { ...item, detalles };
+                } catch (error) {
+                  console.error(
+                    "Error obteniendo detalles del producto",
+                    error
+                  );
+                  return item;
+                }
+              })
+            );
+            return { ...envio, carrito: carritoConDetalles };
+          })
+        );
 
-      if (!response.ok) {
-        throw new Error("Error al eliminar el envío");
+        setEnvios(enviosConDetalles);
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      setEnvios((prevEnvios) =>
-        prevEnvios.filter((envio) => envio._id !== id)
-      );
-      console.log("Envío eliminado");
+    fetchEnvios();
+  }, [apiUrl]);
+
+  const handleEnviar = async (id: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/dashboard/envios/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Error al eliminar el envío");
+
+      setEnvios((prev) => prev.filter((envio) => envio._id !== id));
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+  };
 
   return (
     <div className="mx-auto mt-6 p-4">
@@ -141,19 +175,35 @@ const EnviosPendientes = () => {
                     <strong>Fecha de Creación:</strong>{" "}
                     {new Date(envio.createdAt).toLocaleString()}
                   </p>
+
                   <p className="text-sm text-muted-foreground font-semibold mt-2">
                     Carrito:
                   </p>
                   {envio.carrito.map((item, index) => (
-                    <p
+                    <div
                       key={index}
-                      className="text-sm text-muted-foreground ml-2"
+                      className="ml-2 mb-2 text-sm text-muted-foreground"
                     >
-                      • {item.titulo} - ${item.precio}
-                    </p>
+                      • {item.titulo} - ${item.precio} x {item.cantidad}
+                      {item.detalles && (
+                        <div className="ml-4 text-xs space-y-1">
+                          {item.detalles.color && (
+                            <p>Color: {item.detalles.color}</p>
+                          )}
+                          {item.detalles.batteryStatus != null && (
+                            <p>Batería: {item.detalles.batteryStatus}%</p>
+                          )}
+                          {item.detalles.memory && (
+                            <p>Memoria: {item.detalles.memory} GB</p>
+                          )}
+                          {item.detalles.condition && (
+                            <p>Condicion: {item.detalles.condition} </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   ))}
 
-                  {/* Botón con confirmación */}
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button

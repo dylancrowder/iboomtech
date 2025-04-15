@@ -60,52 +60,81 @@ export const memories = [16, 32, 64, 128, 256, 512, 1024] as const;
 export const conditions = ["nuevo", "usado"] as const;
 
 // Esquema de validación
-export const productSchema = z.object({
-  model: z.enum(validModels, {
-    errorMap: () => ({ message: "Seleccione un modelo válido" }),
-  }),
 
-  condition: z.enum(conditions, {
-    errorMap: () => ({ message: "Seleccione la condición del iPhone" }),
-  }),
-
-  price: z.coerce.number().min(1, { message: "Debes ingresar un precio" }),
-
-  quantity: z.coerce
-    .number()
-    .int({ message: "La cantidad debe ser un número entero" })
-    .min(1, { message: "Debe haber al menos un producto en stock" }),
-
-  color: z.enum(validColors, {
-    errorMap: () => ({ message: "Seleccione un color válido" }),
-  }),
-
-  batteryStatus: z.coerce
-    .number()
-    .int({ message: "El estado de la batería debe ser un número entero" })
-    .min(1, { message: "El estado de la batería debe ser al menos 1%" })
-    .max(100, { message: "El estado de la batería no puede superar el 100%" }),
-
-  memory: z.coerce
-    .number()
-    .min(8, { message: "La memoria debe ser al menos 8GB" })
-    .max(1024, { message: "La memoria no puede superar los 1024GB" }),
-
-  description: z
-    .string()
-    .min(5, { message: "La descripción debe tener al menos 5 caracteres" })
-    .max(500, {
-      message: "La descripción no puede superar los 500 caracteres",
+export const productSchema = z
+  .object({
+    model: z.enum(validModels, {
+      errorMap: () => ({ message: "Seleccione un modelo válido" }),
     }),
 
-  details: z
-    .string()
-    .min(5, { message: "Los detalles deben tener al menos 5 caracteres" })
-    .max(1000, {
-      message: "Los detalles no pueden superar los 1000 caracteres",
+    condition: z.enum(conditions, {
+      errorMap: () => ({ message: "Seleccione la condición del iPhone" }),
     }),
 
-  enabled: z.boolean(),
-});
+    price: z.coerce.number().min(1, { message: "Debes ingresar un precio" }),
+
+    quantity: z.coerce
+      .number()
+      .int({ message: "La cantidad debe ser un número entero" })
+      .min(1, { message: "Debe haber al menos un producto en stock" }),
+
+    color: z.enum(validColors, {
+      errorMap: () => ({ message: "Seleccione un color válido" }),
+    }),
+
+    batteryStatus: z
+      .union([
+        z.coerce
+          .number()
+          .int({ message: "El estado de la batería debe ser un número entero" })
+          .min(1, { message: "El estado de la batería debe ser al menos 1%" })
+          .max(100, {
+            message: "El estado de la batería no puede superar el 100%",
+          }),
+        z.undefined(),
+      ])
+      .optional(),
+
+    memory: z.coerce
+      .number()
+      .min(8, { message: "La memoria debe ser al menos 8GB" })
+      .max(1024, { message: "La memoria no puede superar los 1024GB" }),
+
+    description: z
+      .string()
+      .min(5, { message: "La descripción debe tener al menos 5 caracteres" })
+      .max(500, {
+        message: "La descripción no puede superar los 500 caracteres",
+      }),
+
+    details: z
+      .string()
+      .min(5, { message: "Los detalles deben tener al menos 5 caracteres" })
+      .max(1000, {
+        message: "Los detalles no pueden superar los 1000 caracteres",
+      }),
+
+    enabled: z.boolean(),
+  })
+  .superRefine((data, ctx) => {
+    if (
+      data.condition === "usado" &&
+      (data.batteryStatus === undefined || isNaN(data.batteryStatus))
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Debe indicar el estado de la batería para iPhones usados",
+        path: ["batteryStatus"],
+      });
+    }
+
+    if (data.condition === "nuevo" && data.quantity < 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Debe ingresar una cantidad válida para iPhones nuevos",
+        path: ["quantity"],
+      });
+    }
+  });
 
 export type ProductFormValues = z.infer<typeof productSchema>;

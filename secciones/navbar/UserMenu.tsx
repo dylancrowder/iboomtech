@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { LogIn, LogOut, Package, User, UserCircle } from "lucide-react"
-import Link from "next/link"
-import { useState } from "react"
+import { LogIn, LogOut, Package, User, UserCircle } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,24 +12,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import useAuthStore from "@/zustand/useAuthStore"
+} from "@/components/ui/dropdown-menu";
+import useAuthStore from "@/zustand/useAuthStore";
+type UserMenuProps = {
+  setIsOpene: (value: boolean) => void;
+};
 
-export default function UserMenu() {
-  const [isOpen, setIsOpen] = useState(false)
-  const { isAuthenticated, logout } = useAuthStore()
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-
-  // Close dropdown when navigating
-/*   useEffect(() => {
-    const handleRouteChange = () => {
-      setIsOpen(false)
-    }
-
-    return () => {
-
-    }
-  }, []) */
+export default function UserMenu({ setIsOpene }: UserMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuthStore();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleLogout = async () => {
     try {
@@ -39,20 +31,20 @@ export default function UserMenu() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-      })
+      });
 
       if (response.ok) {
-        localStorage.removeItem("token")
-        logout()
-        setIsOpen(false)
-        console.log("Sesión cerrada")
+        localStorage.removeItem("token");
+        logout();
+        setIsOpen(false);
+        console.log("Sesión cerrada");
       } else {
-        console.error("Error al cerrar sesión")
+        console.error("Error al cerrar sesión");
       }
     } catch (error) {
-      console.error("Error en la solicitud:", error)
+      console.error("Error en la solicitud:", error);
     }
-  }
+  };
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -60,7 +52,7 @@ export default function UserMenu() {
         <Button
           variant="ghost"
           size="icon"
-          className="relative rounded-full transition-colors hover:bg-muted focus-visible:bg-muted"
+          className="cursor-pointer relative rounded-full transition-colors hover:bg-muted focus-visible:bg-muted"
           aria-label="Menú de usuario"
         >
           <User className="h-5 w-5" />
@@ -108,7 +100,11 @@ export default function UserMenu() {
         ) : (
           <DropdownMenuItem asChild className="p-0">
             <Link href="/login">
-              <Button className="w-full justify-start gap-2 rounded-sm" variant="default">
+              <Button
+                className="w-full justify-start gap-2 rounded-sm"
+                variant="default"
+                onClick={() => setIsOpene(false)}
+              >
                 <LogIn className="h-4 w-4" />
                 Iniciar sesión
               </Button>
@@ -117,5 +113,5 @@ export default function UserMenu() {
         )}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

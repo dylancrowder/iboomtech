@@ -19,27 +19,27 @@ export default function Dashboard() {
     {
       nombre: "iPhone",
       icon: <Smartphone className="h-4 w-4" />,
-      href: "/stock/iphone",
+      href: "/dashboard/agregarstock/iphone",
     },
     {
       nombre: "iPad",
       icon: <Tablet className="h-4 w-4" />,
-      href: "/stock/ipad",
+      href: "/dashboard/agregarstock/ipad",
     },
     {
       nombre: "Android",
       icon: <Monitor className="h-4 w-4" />,
-      href: "/stock/android",
+      href: "/dashboard/agregarstock/android",
     },
     {
       nombre: "MacBook",
       icon: <Laptop className="h-4 w-4" />,
-      href: "/stock/macbook",
+      href: "/dashboard/agregarstock/macbook",
     },
     {
       nombre: "Accesorios",
       icon: <Headphones className="h-4 w-4" />,
-      href: "/stock/accesorios",
+      href: "/dashboard/agregarstock/accesorios",
     },
   ];
 
@@ -67,7 +67,7 @@ export default function Dashboard() {
               <Link
                 key={cat.nombre}
                 href={cat.href}
-                className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:underline"
               >
                 {cat.icon}
                 {cat.nombre}
@@ -88,7 +88,7 @@ export default function Dashboard() {
               <Link
                 key={cat.nombre}
                 href={cat.href}
-                className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
+                className="flex items-center gap-2 text-sm text-muted-foreground hover:underline"
               >
                 {cat.icon}
                 {cat.nombre}

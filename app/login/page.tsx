@@ -63,7 +63,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full py-3 px-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-200"
+                className="w-full py-6 px-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-200"
               />
             </div>
             <div className="relative">
@@ -73,7 +73,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full py-3 px-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-200"
+                className="w-full py-6 px-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 transition duration-200"
               />
             </div>
 
@@ -83,7 +83,7 @@ const Login = () => {
 
             <Button
               type="submit"
-              className="w-full py-3 px-4 bg-black text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition duration-200"
+              className="w-full py-6 px-4 bg-black text-white cursor-pointer rounded-md hover:bg-black/80 focus:ring-2 focus:ring-blue-500 transition duration-200"
             >
               Iniciar sesión
             </Button>

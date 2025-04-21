@@ -422,7 +422,7 @@ export default function CheckoutPage() {
                         </div>
                       )}
 
-                      <Label className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer hover:bg-accent">
+                    {/*   <Label className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer hover:bg-accent">
                         <RadioGroupItem
                           value="transferencia"
                           {...register("metodoPago")}
@@ -441,7 +441,7 @@ export default function CheckoutPage() {
                             </h2>
                           </div>
                         </div>
-                      )}
+                      )} */}
                     </RadioGroup>
 
                     <p className="text-xs text-muted-foreground flex items-center mt-2">

@@ -33,38 +33,33 @@ const products = [
     title: "iPhones",
     href: "/productos/iphone",
     description: "Descubre la última generación de iPhones",
-    icon: "📱",
   },
   {
     title: "Android",
     href: "/productos/android",
     description: "Explora nuestra selección de smartphones Android",
-    icon: "📱",
   },
   {
     title: "Accesorios",
     href: "/productos/accesorios",
     description: "Complementos y accesorios para tus dispositivos",
-    icon: "🎧",
   },
   {
     title: "MacBooks",
     href: "/productos/macbooks",
     description: "Potentes laptops para trabajo y creatividad",
-    icon: "💻",
   },
   {
     title: "iPads",
     href: "/productos/ipads",
     description: "Tablets versátiles para todo tipo de usuarios",
-    icon: "📟",
   },
 ];
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const { isAuthenticated } = useAuthStore(); // <- Estado global
+  const { isAuthenticated } = useAuthStore();
 
   if (pathname.startsWith("/dashboard") || pathname.startsWith("/checkout")) {
     return null;
@@ -135,7 +130,7 @@ const Nav = () => {
       {/* Right side */}
       <div className="flex items-center gap-1 md:gap-2">
         <div className="hidden sm:block ">
-          <UserMenu />
+          <UserMenu setIsOpene={setIsOpen} />
         </div>
         <div className="hidden sm:block">
           <CartMenu />
@@ -156,7 +151,7 @@ const Nav = () => {
 
             <div className="flex justify-between items-center p-4 bg-muted/30">
               <div className="sm:hidden flex gap-2 w-full justify-between">
-                <UserMenu />
+                <UserMenu setIsOpene={setIsOpen} />
                 <CartMenu />
               </div>
             </div>
@@ -209,8 +204,9 @@ const Nav = () => {
                     onClick={() => setIsOpen(false)}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="text-lg">{product.icon}</span>
-                      <span>{product.title}</span>
+                      <span className="text-sm font-medium">
+                        {product.title}
+                      </span>
                     </div>
                     <ChevronRight size={16} className="text-muted-foreground" />
                   </Link>

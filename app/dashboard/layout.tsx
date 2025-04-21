@@ -36,9 +36,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
-
+import logo from "../../assets/imagenes/logotipo/LOGO-negro-iboom.png";
 import useAuthStore from "@/zustand/useAuthStore";
 import { useSessionCheck } from "@/hooks/Verify";
+import Image from "next/image";
 
 export default function DashboardLayout({
   children,
@@ -102,7 +103,7 @@ export default function DashboardLayout({
             <div className="flex items-center justify-center py-2">
               <Link href="/" className="flex items-center justify-center">
                 <div className="h-10 w-32 bg-muted flex items-center justify-center rounded">
-                  <span className="font-semibold text-primary">IBOOM</span>
+                  <Image src={logo} alt="logotipo marca"></Image>
                 </div>
               </Link>
             </div>

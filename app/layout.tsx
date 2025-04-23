@@ -22,11 +22,7 @@ export default function RootLayout({
           <Nav />
           <Toaster position="top-right" offset={62} richColors />
         </header>
-        {/*  <div className="w-[100%]  h-[200vh] absolute flex justify-center items-center">
-          <div className="w-[90%] h-[600vh] border border-black"></div>
-        </div>   */}
         {children}
-
         <Footer />
       </body>
     </html>

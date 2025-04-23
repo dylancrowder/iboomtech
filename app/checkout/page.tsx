@@ -36,7 +36,10 @@ const paymentSchema = z.object({
     .min(2, "Debe especificar una codigo postal")
     .optional(),
 
-  apartamento_opcional: z.string().optional(),
+  apartamento_opcional: z
+    .string()
+    .transform((val) => (val.trim() === "" ? undefined : val))
+    .optional(),
 
   provincia: z.string().min(2, "Debe especificar una provincia"),
   telefono: z
@@ -422,7 +425,7 @@ export default function CheckoutPage() {
                         </div>
                       )}
 
-                    {/*   <Label className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer hover:bg-accent">
+                      {/*   <Label className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer hover:bg-accent">
                         <RadioGroupItem
                           value="transferencia"
                           {...register("metodoPago")}

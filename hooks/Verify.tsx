@@ -8,8 +8,7 @@ export const useSessionCheck = () => {
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
-console.log("este es el token", token);
-
+  
       if (!token) {
         logout();
         return;

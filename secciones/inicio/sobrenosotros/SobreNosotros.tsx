@@ -1,84 +1,47 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
-import React, { useState } from "react";
-import styles from "./sobre_nosotros.module.css";
+import React from "react";
 import { StaticImageData } from "next/image";
+
 // Iconos
 import icon_nuevo_color from "../../../assets/imagenes/sobrenosotros/nuevo-producto-azul.png";
 import icon_color_change from "../../../assets/imagenes/sobrenosotros/azul-change.png";
 import icon_color_envios from "../../../assets/imagenes/sobrenosotros/envio-azul.png";
 import icon_local_color from "../../../assets/imagenes/sobrenosotros/tienda-azul.png";
 
-import chevronDown from "../../../assets/imagenes/sobrenosotros/abajo-chevron.png";
-import chevronUp from "../../../assets/imagenes/sobrenosotros/hasta-chevron.png";
-interface CardProps {
+interface CardItemProps {
   icon: StaticImageData;
   title: string;
   description: string;
 }
-const Card: React.FC<CardProps> = ({ icon, title, description }) => {
+
+const CardItem: React.FC<CardItemProps> = ({ icon, title, description }) => {
   const { ref, inView } = useInView({
-    triggerOnce: true, // Solo animar una vez
-    threshold: 1, // Se activa cuando el 20% del componente está visible
+    triggerOnce: true,
+    threshold: 0.3,
   });
-  const [abrir, setAbrir] = useState(false);
-  function handleAbrir() {
-    setAbrir((prev) => !prev);
-  }
 
   return (
-    <div className={styles.padre_carta}>
-      <motion.div
-        ref={ref}
-        className={styles.card_container}
-        initial={{ opacity: 0, y: 160 }} // Comienza 50px abajo y con opacidad 0
-        animate={
-          inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 0 } // Solo anima si está en vista
-        }
-        transition={{ duration: 2, ease: "easeOut" }}
-      >
-        <div className={styles.container_info}>
-          <div className={styles.img_text_cont}>
-            <div className={styles.c}>
-              <div className={styles.ll}>
-                <Image src={icon} alt={title} className={styles.icon_img} />
-              </div>
-              <h2 className={styles.subtitle_about}>{title}</h2>
-            </div>
-            <button className={styles.btn_mas} onClick={handleAbrir}>
-              <Image
-                src={abrir ? chevronUp : chevronDown}
-                alt={abrir ? "Cerrar" : "Abrir"}
-                className={styles.chevron_icon}
-              />
-            </button>
-          </div>
-          <div className={styles.motion_ctn}>
-            <motion.div
-              initial={{ opacity: 0, maxHeight: 0 }}
-              animate={
-                abrir
-                  ? { opacity: 1, maxHeight: 300 }
-                  : { opacity: 0, maxHeight: 0 }
-              }
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              style={{ overflow: "hidden" }}
-            >
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={abrir ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                className={styles.desc}
-              >
-                {description}
-              </motion.p>
-            </motion.div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <Card className="hover:shadow-lg transition-shadow duration-300">
+        <CardHeader className="flex flex-col items-center justify-center space-y-2">
+          <Image src={icon} alt={title} width={60} height={60} />
+          <CardTitle className="text-center text-lg">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-center text-muted-foreground">{description}</p>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
 
@@ -87,54 +50,38 @@ const SobreNosotros = () => {
     {
       icon: icon_nuevo_color,
       title: "Productos Nuevos",
-      description:
-        "Vendemos productos nuevos, sellados en caja y con garantía incluida.",
+      description: "Vendemos productos nuevos, sellados en caja y con garantía incluida.",
     },
     {
       icon: icon_color_change,
       title: "Cambiamos tu dispositivo",
-      description:
-        "Intercambiamos tu iPhone por uno nuevo o reacondicionado, con garantía incluida.",
+      description: "Intercambiamos tu iPhone por uno nuevo o reacondicionado, con garantía incluida.",
     },
-  ];
-
-  const cardData2 = [
     {
       icon: icon_color_envios,
       title: "Envíos",
-      description:
-        "Realizamos envíos a todo el país con garantía y seguimiento.",
+      description: "Realizamos envíos a todo el país con garantía y seguimiento.",
     },
     {
       icon: icon_local_color,
       title: "Local Físico",
-      description:
-        "Visítanos en nuestro local para ver y probar nuestros productos.",
+      description: "Visítanos en nuestro local para ver y probar nuestros productos.",
     },
   ];
 
   return (
-    <section className={styles.about}>
-      <div className={styles.gen}>
-        <div className={styles.cnt_title}>
-          <p className={styles.aboutText}>
-            En <strong>iBoomTech</strong> ofrecemos productos tecnológicos,
-            nuevos y de segunda mano con garantía.
+    <section className="py-10">
+      <div className="container mx-auto px-4">
+        <div className="mb-10 text-center">
+          <p className="text-lg md:text-xl font-semibold">
+            En <strong>iBoomTech</strong> ofrecemos productos tecnológicos, nuevos y de segunda mano con garantía.
           </p>
         </div>
-        <div className={styles.flex}>
-          <div className={styles.grid_container}>
-            <div className={styles.margin_top}>
-              {cardsData.map((card, index) => (
-                <Card key={index} {...card} />
-              ))}
-            </div>
-            <div>
-              {cardData2.map((card, index) => (
-                <Card key={index} {...card} />
-              ))}
-            </div>
-          </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cardsData.map((card, index) => (
+            <CardItem key={index} {...card} />
+          ))}
         </div>
       </div>
     </section>

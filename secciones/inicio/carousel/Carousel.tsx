@@ -5,14 +5,13 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import styles from "./carrouse.module.css";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Card,  CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 import img_iphone from "../../../assets/imagenes/carrousel/iphone-blanca-r.png";
 import img_android from "../../../assets/imagenes/carrousel/android-blanca-r.png";
-import Image from "next/image";
 
-// Datos de productos
 const products = [
   { id: 1, name: "iPhone 13", price: "$799", image: img_android },
   { id: 2, name: "iPhone 14 Pro", price: "$999", image: img_iphone },
@@ -25,56 +24,72 @@ const products = [
 
 export default function Carousel() {
   return (
-    <div className={styles.centro_carrousel}>
-      <div className={styles.main_carrousel}>
-        <div className={styles.contenedor_carrousel}>
+    <section className="py-16 bg-gray-100  ">
+      <div className=" mx-auto px-6 w-[90%] ">
+        {/* TÍTULO */}
+        <div className="mb-10 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-800">
+            Productos Destacados
+          </h2>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Descubre nuestras mejores ofertas
+          </p>
+        </div>
+
+        {/* Carrusel */}
+        <div className="relative w-full ">
           {/* Botón Izquierdo */}
-          <button className={`${styles.navButton} ${styles.prevButton}`}>
+          <button className="prevButton absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-md hover:bg-gray-200 transition">
             <ChevronLeft size={24} />
           </button>
 
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            spaceBetween={20} // Espacio entre productos
-            slidesPerView={1} // Móviles: 1 producto
+            spaceBetween={20}
+            slidesPerView={1}
             slidesPerGroup={1}
             navigation={{
-              nextEl: `.${styles.nextButton}`,
-              prevEl: `.${styles.prevButton}`,
+              nextEl: ".nextButton",
+              prevEl: ".prevButton",
             }}
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             loop
             breakpoints={{
-              640: { slidesPerView: 2 }, // Tablets pequeñas
-              768: { slidesPerView: 3 }, // Tablets grandes
-              1024: { slidesPerView: 5 }, // Escritorio: 5 productos
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 5 },
             }}
-            className={styles.swipper}
+            className="w-full"
           >
             {products.map((product) => (
               <SwiperSlide key={product.id}>
-                <div className={styles.card_c}>
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    className={styles.img}
-                  />
-                  <div className={styles.c_c}>
-                    <h3 className={styles.title_card}>{product.name}</h3>
-                    <p className={styles.subtitle_card}>{product.price}</p>
+                <Card className="hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer rounded-2xl overflow-hidden lg:h-[490px]  flex flex-col">
+                  <div className="relative w-full h-[500px] overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-100"
+                      quality={100}
+                    />
                   </div>
-                </div>
+                  <CardHeader className="flex-1 flex flex-row justify-between items-center  p-6 ">
+                    <CardTitle className="text-xl">{product.name}</CardTitle>
+
+                    <p className=" text-muted-foreground">{product.price}</p>
+                  </CardHeader>
+                </Card>
               </SwiperSlide>
             ))}
           </Swiper>
 
           {/* Botón Derecho */}
-          <button className={`${styles.navButton} ${styles.nextButton}`}>
+          <button className="nextButton absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow-md hover:bg-gray-200 transition">
             <ChevronRight size={24} />
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

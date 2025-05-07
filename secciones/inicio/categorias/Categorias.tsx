@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Image from "next/image";
@@ -84,13 +84,11 @@ const Categorias = () => {
                     </div>
                     <CardTitle className="text-center text-lg">
                       {categoria.title}
+                      <p className="text-center text-sm text-muted-foreground ">
+                        {categoria.subtitle}
+                      </p>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-center text-sm text-muted-foreground">
-                      {categoria.subtitle}
-                    </p>
-                  </CardContent>
                 </Card>
               </Link>
             </motion.div>
